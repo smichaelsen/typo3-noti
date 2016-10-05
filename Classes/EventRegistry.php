@@ -25,47 +25,49 @@ class EventRegistry
      */
     public static function registerEvent(Event $event)
     {
-        if (!is_array(self::$eventRegistry[$event->getExtensionName()])) {
-            self::$eventRegistry[$event->getExtensionName()] = [];
+        if (isset(self::$eventRegistry[$event->getIdentifier()])) {
+            throw new Exception('Event ' . $event->getIdentifier() . ' was already registered.', 1475677895);
         }
-        if (isset(self::$eventRegistry[$event->getExtensionName()][$event->getIdentifier()])) {
-            throw new Exception('Event ' . $event->getExtensionName() . '/' . $event->getIdentifier() . ' was already registered.', 1475677895);
-        }
-        self::$eventRegistry[$event->getExtensionName()][$event->getIdentifier()] = $event;
+        self::$eventRegistry[$event->getIdentifier()] = $event;
     }
 
     /**
-     * @param string $extensionName
+     * @return Event[]
+     */
+    public static function getEvents()
+    {
+        return self::$eventRegistry;
+    }
+
+    /**
      * @param string $identifier
      * @param array $variables
      */
-    public static function triggerEvent($extensionName, $identifier, $variables = [])
+    public static function triggerEvent($identifier, $variables = [])
     {
-        self::getNotificationService()->notify(self::getEvent($extensionName, $identifier), $variables);
+        self::getNotificationService()->notify(self::getEvent($identifier), $variables);
     }
 
     /**
-     * @param string $extensionName
      * @param string $identifier
      * @return Event
      * @throws Exception
      */
-    public static function getEvent($extensionName, $identifier)
+    public static function getEvent($identifier)
     {
-        if (!self::hasEvent($extensionName, $identifier)) {
-            throw new \Exception('Event ' . $extensionName() . '/' . $identifier() . ' is not registered', 1475678573);
+        if (!self::hasEvent($identifier)) {
+            throw new \Exception('Event ' . $identifier() . ' is not registered', 1475678573);
         }
-        return self::$eventRegistry[$extensionName][$identifier];
+        return self::$eventRegistry[$identifier];
     }
 
     /**
-     * @param string $extensionName
      * @param string $identifier
      * @return bool
      */
-    public static function hasEvent($extensionName, $identifier)
+    public static function hasEvent($identifier)
     {
-        return isset(self::$eventRegistry[$extensionName][$identifier]);
+        return isset(self::$eventRegistry[$identifier]);
     }
 
     /**

@@ -16,7 +16,12 @@ return [
         'iconfile' => 'EXT:noti/Resources/Public/Icons/tx_noti_subscription.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'event, addresses, text'],
+        '1' => ['showitem' => 'event, addresses, --palette--;' . $lll . '.palette.notification;notification'],
+    ],
+    'palettes' => [
+        'notification' => [
+            'showitem' => 'text, available_placeholders'
+        ],
     ],
     'columns' => [
         'addresses' => [
@@ -25,14 +30,19 @@ return [
                 'type' => 'text',
             ],
         ],
+        'available_placeholders' => [
+            'label' => $lll . '.available_placeholders',
+            'config' => [
+                'type' => 'user',
+                'userFunc' => \Smichaelsen\Noti\UserFunc\SubscriptionTcaUserFunctions::class . '->availablePlaceholdersField',
+            ],
+        ],
         'event' => [
             'label' => $lll . '.event',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items' => [
-                    ['Neue Produktbewertung', ''],
-                ]
+                'itemsProcFunc' => \Smichaelsen\Noti\UserFunc\SubscriptionTcaUserFunctions::class . '->availableEventsItemsProcFunc',
             ],
         ],
         'text' => [

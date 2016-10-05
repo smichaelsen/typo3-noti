@@ -5,13 +5,6 @@ class Event
 {
 
     /**
-     * Extension providing the event
-     *
-     * @var string
-     */
-    protected $extensionName;
-
-    /**
      * @var string Unique event identifier
      */
     protected $identifier;
@@ -29,36 +22,25 @@ class Event
     protected $variables = [];
 
     /**
-     * @param string $extensionName
      * @param string $identifier
      * @throws \InvalidArgumentException
      */
-    public function __construct($extensionName, $identifier)
+    public function __construct($identifier)
     {
-        if (empty($extensionName)) {
-            throw new \InvalidArgumentException('The $extensionName must not be empty', 1475677746);
-        }
         if (empty($identifier)) {
             throw new \InvalidArgumentException('The $identifier must not be empty', 1475677768);
         }
-        $this->extensionName = $extensionName;
         $this->identifier = $identifier;
     }
 
     /**
      * @param string $title Title or LLL reference
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getExtensionName()
-    {
-        return $this->extensionName;
+        return $this;
     }
 
     /**
@@ -74,7 +56,7 @@ class Event
      */
     public function getTitle()
     {
-        return $this->title;
+        return empty($this->title) ? $this->identifier : $this->title;
     }
 
     /**
@@ -88,10 +70,12 @@ class Event
     /**
      * @param string $key
      * @param string $description Description or LLL reference
+     * @return $this
      */
     public function addVariable($key, $description)
     {
-
+        $this->variables[$key] = $description;
+        return $this;
     }
 
 }

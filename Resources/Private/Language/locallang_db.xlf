@@ -11,9 +11,15 @@
 			<trans-unit id="tx_noti_subscription.addresses">
 				<source>Addresses</source>
 			</trans-unit>
+			<trans-unit id="tx_noti_subscription.available_placeholders">
+				<source>Available Placeholders</source>
+			</trans-unit>
 			<trans-unit id="tx_noti_subscription.event">
 				<source>Event</source>
 			</trans-unit>
+            <trans-unit id="tx_noti_subscription.palette.notification">
+                <source>Notification</source>
+            </trans-unit>
             <trans-unit id="tx_noti_subscription.text">
                 <source>Text</source>
             </trans-unit>

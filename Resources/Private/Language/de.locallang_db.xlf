@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-10-05T17:24:14Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="tx_noti_subscription" approved="yes">
+			<source>Subscription</source>
+			<target>Benachrichtigung</target>
+		</trans-unit>
+		<trans-unit id="tx_noti_subscription.addresses" approved="yes">
+			<source>Addresses</source>
+			<target>Adressen</target>
+		</trans-unit>
+		<trans-unit id="tx_noti_subscription.available_placeholders" approved="yes">
+			<source>Available Placeholders</source>
+			<target>Verfügbare Platzhalter</target>
+		</trans-unit>
+		<trans-unit id="tx_noti_subscription.event" approved="yes">
+			<source>Event</source>
+			<target>Ereignis</target>
+		</trans-unit>
+		<trans-unit id="tx_noti_subscription.palette.notification" approved="yes">
+			<source>Notification</source>
+			<target>Benachrichtigung</target>
+		</trans-unit>
+		<trans-unit id="tx_noti_subscription.text" approved="yes">
+			<source>Text</source>
+			<target>Benachrichtigungstext</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>
