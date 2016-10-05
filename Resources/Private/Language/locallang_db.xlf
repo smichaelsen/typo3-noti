@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2015-09-01T14:30:42Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+			<trans-unit id="tx_noti_subscription">
+				<source>Subscription</source>
+			</trans-unit>
+			<trans-unit id="tx_noti_subscription.addresses">
+				<source>Addresses</source>
+			</trans-unit>
+			<trans-unit id="tx_noti_subscription.event">
+				<source>Event</source>
+			</trans-unit>
+            <trans-unit id="tx_noti_subscription.text">
+                <source>Text</source>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>
