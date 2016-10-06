@@ -22,8 +22,9 @@ class EmailNotifier implements NotifierInterface
         });
         if (count($addresses)) {
             $subject = empty($subscriptionRecord['email_subject']) ? $this->getLanguageService()->sL($event->getTitle()) : $subscriptionRecord['email_subject'];
+            $from = empty($subscriptionRecord['email_from']) ? 'notification@noti.org' : $subscriptionRecord['email_from'];
             $mailMessage = GeneralUtility::makeInstance(MailMessage::class);
-            $mailMessage->setFrom('notification@noti.org');
+            $mailMessage->setFrom($from);
             $mailMessage->setBcc($addresses);
             $mailMessage->setSubject($subject);
             $mailMessage->setBody($notificationContent);

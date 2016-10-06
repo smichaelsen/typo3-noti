@@ -24,7 +24,7 @@ return [
     ],
     'palettes' => [
         'email' => [
-            'showitem' => 'email_subject, --linebreak--, addresses',
+            'showitem' => 'email_subject, email_from, --linebreak--, addresses',
         ],
         'notification' => [
             'showitem' => 'text, available_placeholders',
@@ -45,6 +45,13 @@ return [
             'config' => [
                 'type' => 'user',
                 'userFunc' => \Smichaelsen\Noti\UserFunc\SubscriptionTcaUserFunctions::class . '->availablePlaceholdersField',
+            ],
+        ],
+        'email_from' => [
+            'label' => $lll . '.email_from',
+            'config' => [
+                'type' => 'input',
+                'placeholder' => 'notification@noti.org',
             ],
         ],
         'email_subject' => [

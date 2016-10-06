@@ -14,6 +14,9 @@
 			<trans-unit id="tx_noti_subscription.available_placeholders">
 				<source>Available Placeholders</source>
 			</trans-unit>
+			<trans-unit id="tx_noti_subscription.email_from">
+				<source>Email from address</source>
+			</trans-unit>
 			<trans-unit id="tx_noti_subscription.email_subject">
 				<source>Email subject</source>
 			</trans-unit>

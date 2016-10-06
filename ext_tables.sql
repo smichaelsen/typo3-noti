@@ -3,6 +3,7 @@ CREATE TABLE tx_noti_subscription (
     pid int(11) NOT NULL default '0',
 
     addresses text,
+    email_from varchar(255) NOT NULL default '',
     email_subject varchar(255) NOT NULL default '',
     event varchar(255) NOT NULL default '',
     slack_channel varchar(255) NOT NULL default '',
