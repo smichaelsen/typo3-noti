@@ -6,8 +6,6 @@ use Smichaelsen\Noti\Notifier\NotifierInterface;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Lang\LanguageService;
 
 class NotificationService implements SingletonInterface
@@ -25,8 +23,7 @@ class NotificationService implements SingletonInterface
             $variables['eventTitle'] = $this->getLanguageService()->sL($event->getTitle());
             $variables['notifier'] = $notifier;
             $variables['notifierClassName'] = get_class($notifier);
-            $notificationContent = $this->renderNotificationContent($subscription, $variables);
-            $notifier->notify($event, $subscription, $notificationContent);
+            $notifier->notify($event, $subscription, $variables);
         }
     }
 
@@ -44,14 +41,6 @@ class NotificationService implements SingletonInterface
     }
 
     /**
-     * @return DatabaseConnection
-     */
-    protected function getDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
-    }
-
-    /**
      * @param string $subscription
      * @return NotifierInterface
      * @throws \Exception
@@ -66,15 +55,11 @@ class NotificationService implements SingletonInterface
     }
 
     /**
-     * @param array $variables
-     * @return string
+     * @return DatabaseConnection
      */
-    protected function renderNotificationContent($subscription, $variables)
+    protected function getDatabaseConnection()
     {
-        $view = GeneralUtility::makeInstance(ObjectManager::class)->get(StandaloneView::class);
-        $view->setTemplateSource($subscription['text']);
-        $view->assignMultiple($variables);
-        return $view->render();
+        return $GLOBALS['TYPO3_DB'];
     }
 
     /**

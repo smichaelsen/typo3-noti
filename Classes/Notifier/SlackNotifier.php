@@ -4,22 +4,22 @@ namespace Smichaelsen\Noti\Notifier;
 use Smichaelsen\Noti\Domain\Model\Event;
 use TYPO3\CMS\Lang\LanguageService;
 
-class SlackNotifier implements NotifierInterface
+class SlackNotifier extends AbstractNotifier
 {
 
     /**
      * @param Event $event
      * @param array $subscriptionRecord
-     * @param string $notificationContent
+     * @param array $variables
      * @return void
      */
-    public function notify(Event $event, $subscriptionRecord, $notificationContent)
+    public function notify(Event $event, $subscriptionRecord, $variables)
     {
-        $channel = empty($subscriptionRecord['slack_channel']) ? '#general' : '#' . ltrim($subscriptionRecord['slack_channel'], '#');
+        $channel = empty($subscriptionRecord['slack_channel']) ? '#general' : '#' . ltrim($this->renderContentWithFluid($subscriptionRecord['slack_channel'], $variables), '#');
         $data = 'payload=' . urlencode(json_encode([
                 'channel' => $channel,
                 'icon_emoji' => ':bellhop_bell:',
-                'text' => $notificationContent,
+                'text' => $this->renderContentWithFluid($subscriptionRecord['text'], $variables),
                 'username' => 'noti',
             ]));
 
@@ -27,16 +27,8 @@ class SlackNotifier implements NotifierInterface
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
+        curl_exec($ch);
         curl_close($ch);
-    }
-
-    /**
-     * @return LanguageService
-     */
-    protected function getLanguageService()
-    {
-        return $GLOBALS['LANG'];
     }
 
 }

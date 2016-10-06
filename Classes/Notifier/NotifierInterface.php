@@ -10,9 +10,9 @@ interface NotifierInterface extends SingletonInterface
     /**
      * @param Event $event
      * @param array $subscriptionRecord
-     * @param string $notificationContent
+     * @param array $variables
      * @return void
      */
-    public function notify(Event $event, $subscriptionRecord, $notificationContent);
+    public function notify(Event $event, $subscriptionRecord, $variables);
 
 }
