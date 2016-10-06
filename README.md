@@ -45,5 +45,3 @@ EventRegistry::triggerEvent(
     ]
 );
 ````
-
-If your extension requires `noti` you can of course omit the `isLoaded` condition.
