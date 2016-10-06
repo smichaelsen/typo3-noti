@@ -36,9 +36,8 @@ class SubscriptionTcaUserFunctions
             }
             $content .= '</dl>';
         } else {
-            $content = '<p>There are no placeholdes available for this event type.</p>';
+            $content = '<p>There are no placeholders available for this event type.</p>';
         }
-        $content .= '<p><i>After changing the event type, save the record to update this information.</i></p>';
         return $content;
     }
 

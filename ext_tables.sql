@@ -4,7 +4,10 @@ CREATE TABLE tx_noti_subscription (
 
     addresses text,
     event varchar(255) NOT NULL default '',
+    slack_channel varchar(255) NOT NULL default '',
+    slack_endpoint varchar(255) NOT NULL default '',
     `text` text,
+    type varchar(255) NOT NULL default '',
 
     crdate int(11) DEFAULT '0' NOT NULL,
     tstamp int(11) DEFAULT '0' NOT NULL,

@@ -20,8 +20,26 @@
             <trans-unit id="tx_noti_subscription.palette.notification">
                 <source>Notification</source>
             </trans-unit>
+            <trans-unit id="tx_noti_subscription.palette.slack">
+                <source>Slack Notification Settings</source>
+            </trans-unit>
+            <trans-unit id="tx_noti_subscription.slack_channel">
+                <source>Channel</source>
+            </trans-unit>
+            <trans-unit id="tx_noti_subscription.slack_endpoint">
+                <source>Slack Webhook Endpoint</source>
+            </trans-unit>
             <trans-unit id="tx_noti_subscription.text">
                 <source>Text</source>
+            </trans-unit>
+            <trans-unit id="tx_noti_subscription.type">
+                <source>Notification type</source>
+            </trans-unit>
+            <trans-unit id="tx_noti_subscription.type.EmailNotifier">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="tx_noti_subscription.type.SlackNotifier">
+                <source>Slack</source>
             </trans-unit>
 		</body>
 	</file>

@@ -13,14 +13,21 @@ return [
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
-        'iconfile' => 'EXT:noti/Resources/Public/Icons/tx_noti_subscription.gif'
+        'iconfile' => 'EXT:noti/Resources/Public/Icons/tx_noti_subscription.gif',
+        'type' => 'type',
+        'requestUpdate' => 'event',
     ],
     'types' => [
-        '1' => ['showitem' => 'event, addresses, --palette--;' . $lll . '.palette.notification;notification'],
+        '1' => ['showitem' => 'event, type, addresses, --palette--;' . $lll . '.palette.notification;notification'],
+        \Smichaelsen\Noti\Notifier\EmailNotifier::class => ['showitem' => 'event, type, addresses, --palette--;' . $lll . '.palette.notification;notification'],
+        \Smichaelsen\Noti\Notifier\SlackNotifier::class => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.slack;slack, --palette--;' . $lll . '.palette.notification;notification']
     ],
     'palettes' => [
         'notification' => [
-            'showitem' => 'text, available_placeholders'
+            'showitem' => 'text, available_placeholders',
+        ],
+        'slack' => [
+            'showitem' => 'slack_endpoint, slack_channel',
         ],
     ],
     'columns' => [
@@ -45,10 +52,35 @@ return [
                 'itemsProcFunc' => \Smichaelsen\Noti\UserFunc\SubscriptionTcaUserFunctions::class . '->availableEventsItemsProcFunc',
             ],
         ],
+        'slack_channel' => [
+            'label' => $lll . '.slack_channel',
+            'config' => [
+                'type' => 'input',
+                'placeholder' => '#general',
+            ],
+        ],
+        'slack_endpoint' => [
+            'label' => $lll . '.slack_endpoint',
+            'config' => [
+                'type' => 'input',
+                'placeholder' => 'You can get your webhook endpoint from your Slack settings'
+            ],
+        ],
         'text' => [
             'label' => $lll . '.text',
             'config' => [
                 'type' => 'text',
+            ],
+        ],
+        'type' => [
+            'label' => $lll . '.type',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [$lll . '.type.EmailNotifier', \Smichaelsen\Noti\Notifier\EmailNotifier::class],
+                    [$lll . '.type.SlackNotifier', \Smichaelsen\Noti\Notifier\SlackNotifier::class],
+                ]
             ],
         ],
     ],

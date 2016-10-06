@@ -2,13 +2,13 @@
 namespace Smichaelsen\Noti\Service;
 
 use Smichaelsen\Noti\Domain\Model\Event;
-use Smichaelsen\Noti\Notifier\EmailNotifier;
 use Smichaelsen\Noti\Notifier\NotifierInterface;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Lang\LanguageService;
 
 class NotificationService implements SingletonInterface
 {
@@ -22,6 +22,7 @@ class NotificationService implements SingletonInterface
         $subscriptions = $this->loadSubscriptions($event);
         foreach ($subscriptions as $subscription) {
             $notifier = $this->getNotifierForSubscription($subscription);
+            $variables['eventTitle'] = $this->getLanguageService()->sL($event->getTitle());
             $variables['notifier'] = $notifier;
             $variables['notifierClassName'] = get_class($notifier);
             $notificationContent = $this->renderNotificationContent($subscription, $variables);
@@ -53,11 +54,15 @@ class NotificationService implements SingletonInterface
     /**
      * @param string $subscription
      * @return NotifierInterface
+     * @throws \Exception
      */
     protected function getNotifierForSubscription($subscription)
     {
-        // todo: At the moment we only support the email notifier but there could be others (Slack, SMS, Mobile Push Notification, ...)
-        return GeneralUtility::makeInstance(EmailNotifier::class);
+        $notifier = GeneralUtility::makeInstance($subscription['type']);
+        if (!$notifier instanceof NotifierInterface) {
+            throw new \Exception($subscription['type'] . ' doesn\'t implement the NotifierInterface', 1475737136);
+        }
+        return $notifier;
     }
 
     /**
@@ -70,6 +75,14 @@ class NotificationService implements SingletonInterface
         $view->setTemplateSource($subscription['text']);
         $view->assignMultiple($variables);
         return $view->render();
+    }
+
+    /**
+     * @return LanguageService
+     */
+    protected function getLanguageService()
+    {
+        return $GLOBALS['LANG'];
     }
 
 }
