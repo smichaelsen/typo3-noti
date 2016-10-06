@@ -28,7 +28,7 @@ class SubscriptionTcaUserFunctions
             return 'Save record to view available placeholders';
         }
         $event = EventRegistry::getEvent($row['event']);
-        $availablePlaceholders = $event->getVariables();
+        $availablePlaceholders = $event->getPlaceholders();
         if (count($availablePlaceholders)) {
             $content = '<p>These placeholders are available to be used in the notification text.</p><dl>';
             foreach ($availablePlaceholders as $placeholder => $description) {
