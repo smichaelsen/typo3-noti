@@ -5,6 +5,8 @@ if (!defined('TYPO3_MODE')) {
 
 $lll = 'LLL:EXT:noti/Resources/Private/Language/locallang_db.xlf:tx_noti_subscription';
 
+
+
 return [
     'ctrl' => [
         'title' => $lll,
@@ -18,7 +20,7 @@ return [
         'requestUpdate' => 'event',
     ],
     'types' => [
-        '1' => ['showitem' => 'event, type, addresses, --palette--;' . $lll . '.palette.notification;notification'],
+        '1' => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
         \Smichaelsen\Noti\Notifier\EmailNotifier::class => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
         \Smichaelsen\Noti\Notifier\SlackNotifier::class => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.slack;slack, --palette--;' . $lll . '.palette.notification;notification']
     ],
