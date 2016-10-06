@@ -21,10 +21,11 @@ class EmailNotifier implements NotifierInterface
             return GeneralUtility::validEmail($address);
         });
         if (count($addresses)) {
+            $subject = empty($subscriptionRecord['email_subject']) ? $this->getLanguageService()->sL($event->getTitle()) : $subscriptionRecord['email_subject'];
             $mailMessage = GeneralUtility::makeInstance(MailMessage::class);
             $mailMessage->setFrom('notification@noti.org');
             $mailMessage->setBcc($addresses);
-            $mailMessage->setSubject($this->getLanguageService()->sL($event->getTitle()));
+            $mailMessage->setSubject($subject);
             $mailMessage->setBody($notificationContent);
             $mailMessage->send();
         }

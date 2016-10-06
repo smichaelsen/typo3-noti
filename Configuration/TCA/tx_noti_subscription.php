@@ -19,10 +19,13 @@ return [
     ],
     'types' => [
         '1' => ['showitem' => 'event, type, addresses, --palette--;' . $lll . '.palette.notification;notification'],
-        \Smichaelsen\Noti\Notifier\EmailNotifier::class => ['showitem' => 'event, type, addresses, --palette--;' . $lll . '.palette.notification;notification'],
+        \Smichaelsen\Noti\Notifier\EmailNotifier::class => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
         \Smichaelsen\Noti\Notifier\SlackNotifier::class => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.slack;slack, --palette--;' . $lll . '.palette.notification;notification']
     ],
     'palettes' => [
+        'email' => [
+            'showitem' => 'email_subject, --linebreak--, addresses',
+        ],
         'notification' => [
             'showitem' => 'text, available_placeholders',
         ],
@@ -42,6 +45,13 @@ return [
             'config' => [
                 'type' => 'user',
                 'userFunc' => \Smichaelsen\Noti\UserFunc\SubscriptionTcaUserFunctions::class . '->availablePlaceholdersField',
+            ],
+        ],
+        'email_subject' => [
+            'label' => $lll . '.email_subject',
+            'config' => [
+                'type' => 'input',
+                'placeholder' => 'Leave blank to use the event title as email subject',
             ],
         ],
         'event' => [

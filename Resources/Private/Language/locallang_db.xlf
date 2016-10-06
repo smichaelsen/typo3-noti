@@ -14,9 +14,15 @@
 			<trans-unit id="tx_noti_subscription.available_placeholders">
 				<source>Available Placeholders</source>
 			</trans-unit>
+			<trans-unit id="tx_noti_subscription.email_subject">
+				<source>Email subject</source>
+			</trans-unit>
 			<trans-unit id="tx_noti_subscription.event">
 				<source>Event</source>
 			</trans-unit>
+            <trans-unit id="tx_noti_subscription.palette.email">
+                <source>Email Notification Settings</source>
+            </trans-unit>
             <trans-unit id="tx_noti_subscription.palette.notification">
                 <source>Notification</source>
             </trans-unit>
