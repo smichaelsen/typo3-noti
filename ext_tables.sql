@@ -9,6 +9,7 @@ CREATE TABLE tx_noti_subscription (
     slack_channel varchar(255) NOT NULL default '',
     slack_endpoint varchar(255) NOT NULL default '',
     `text` text,
+    title varchar(255) NOT NULL default '',
     type varchar(255) NOT NULL default '',
 
     crdate int(11) DEFAULT '0' NOT NULL,

@@ -8,7 +8,7 @@ $lll = 'LLL:EXT:noti/Resources/Private/Language/locallang_db.xlf:tx_noti_subscri
 return [
     'ctrl' => [
         'title' => $lll,
-        'label' => 'event',
+        'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -18,9 +18,9 @@ return [
         'requestUpdate' => 'event',
     ],
     'types' => [
-        '1' => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
-        \Smichaelsen\Noti\Notifier\EmailNotifier::class => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
-        \Smichaelsen\Noti\Notifier\SlackNotifier::class => ['showitem' => 'event, type, --palette--;' . $lll . '.palette.slack;slack, --palette--;' . $lll . '.palette.notification;notification']
+        '1' => ['showitem' => 'title, event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
+        \Smichaelsen\Noti\Notifier\EmailNotifier::class => ['showitem' => 'title, event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
+        \Smichaelsen\Noti\Notifier\SlackNotifier::class => ['showitem' => 'title, event, type, --palette--;' . $lll . '.palette.slack;slack, --palette--;' . $lll . '.palette.notification;notification']
     ],
     'palettes' => [
         'email' => [
@@ -87,6 +87,13 @@ return [
             'label' => $lll . '.text',
             'config' => [
                 'type' => 'text',
+            ],
+        ],
+        'title' => [
+            'label' => $lll . '.title',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'required'
             ],
         ],
         'type' => [
