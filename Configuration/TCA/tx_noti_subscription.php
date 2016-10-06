@@ -5,8 +5,6 @@ if (!defined('TYPO3_MODE')) {
 
 $lll = 'LLL:EXT:noti/Resources/Private/Language/locallang_db.xlf:tx_noti_subscription';
 
-
-
 return [
     'ctrl' => [
         'title' => $lll,
