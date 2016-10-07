@@ -2,6 +2,7 @@
 namespace Smichaelsen\Noti\UserFunc;
 
 use Smichaelsen\Noti\EventRegistry;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Lang\LanguageService;
 
 class SubscriptionTcaUserFunctions
@@ -61,6 +62,10 @@ class SubscriptionTcaUserFunctions
      */
     protected function getLanguageService()
     {
+        if (!$GLOBALS['LANG'] instanceof LanguageService) {
+            $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
+            $GLOBALS['LANG']->init('default');
+        }
         return $GLOBALS['LANG'];
     }
 

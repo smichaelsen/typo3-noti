@@ -67,6 +67,10 @@ class NotificationService implements SingletonInterface
      */
     protected function getLanguageService()
     {
+        if (!$GLOBALS['LANG'] instanceof LanguageService) {
+            $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
+            $GLOBALS['LANG']->init('default');
+        }
         return $GLOBALS['LANG'];
     }
 

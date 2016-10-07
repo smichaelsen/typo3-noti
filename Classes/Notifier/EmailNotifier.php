@@ -4,7 +4,6 @@ namespace Smichaelsen\Noti\Notifier;
 use Smichaelsen\Noti\Domain\Model\Event;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Lang\LanguageService;
 
 class EmailNotifier extends AbstractNotifier
 {
@@ -34,11 +33,4 @@ class EmailNotifier extends AbstractNotifier
         }
     }
 
-    /**
-     * @return LanguageService
-     */
-    protected function getLanguageService()
-    {
-        return $GLOBALS['LANG'];
-    }
 }
