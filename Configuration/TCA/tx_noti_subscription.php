@@ -13,7 +13,7 @@ return [
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
-        'iconfile' => 'EXT:noti/Resources/Public/Icons/tx_noti_subscription.gif',
+        'iconfile' => 'EXT:noti/Resources/Public/Icons/tx_noti_subscription.svg',
         'type' => 'type',
         'requestUpdate' => 'event',
     ],
