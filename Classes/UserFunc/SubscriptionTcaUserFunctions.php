@@ -13,9 +13,20 @@ class SubscriptionTcaUserFunctions
      */
     public function availableEventsItemsProcFunc($parameters)
     {
-        foreach (EventRegistry::getEvents() as $eventIdentifier => $event) {
-            $parameters['items'][] = [$event->getTitle(), $eventIdentifier];
+        $eventsByExtensionKey = [];
+        foreach (EventRegistry::getEvents() as $event) {
+            if (!is_array($eventsByExtensionKey[$event->getExtensionKey()])) {
+                $eventsByExtensionKey[$event->getExtensionKey()] = [];
+            }
+            $eventsByExtensionKey[$event->getExtensionKey()][] = $event;
         }
+        foreach ($eventsByExtensionKey as $extensionKey => $events) {
+            $parameters['items'][] = [$extensionKey, '--div--'];
+            foreach ($events as $event) {
+                $parameters['items'][] = [$event->getTitle(), $event->getIdentifier()];
+            }
+        }
+
     }
 
     /**

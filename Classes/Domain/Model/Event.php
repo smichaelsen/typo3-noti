@@ -5,6 +5,11 @@ class Event
 {
 
     /**
+     * @var string
+     */
+    protected $extensionKey;
+
+    /**
      * @var string Unique event identifier
      */
     protected $identifier;
@@ -23,14 +28,35 @@ class Event
 
     /**
      * @param string $identifier
+     * @param string $extensionKey
      * @throws \InvalidArgumentException
      */
-    public function __construct($identifier)
+    public function __construct($identifier, $extensionKey)
     {
         if (empty($identifier)) {
             throw new \InvalidArgumentException('The $identifier must not be empty', 1475677768);
         }
+        if (empty($extensionKey)) {
+            throw new \InvalidArgumentException('The $extensionKey must not be empty', 1478600548);
+        }
+        $this->extensionKey = $extensionKey;
         $this->identifier = $identifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtensionKey()
+    {
+        return $this->extensionKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     /**
@@ -41,14 +67,6 @@ class Event
     {
         $this->title = $title;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
     }
 
     /**

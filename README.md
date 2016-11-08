@@ -29,7 +29,7 @@ In your `ext_localconf.php` register your event:
 
 ````
 \Smichaelsen\Noti\EventRegistry::registerEvent(
-    (new \Smichaelsen\Noti\Domain\Model\Event('myUniqueEventIdentifier'))
+    (new \Smichaelsen\Noti\Domain\Model\Event('myUniqueEventIdentifier', $_EXTKEY))
         ->setTitle('New user registered') // LLL reference is possible and recommended here
         ->addPlaceholder('userName', 'The user name') // This will appear in the backend to show the available placeholders to the user
 );

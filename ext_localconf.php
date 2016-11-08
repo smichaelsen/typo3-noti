@@ -9,7 +9,7 @@ if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_div.p
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_div.php']['systemLog'][] = \Smichaelsen\Noti\Hook\SystemLogHook::class . '->logToNoti';
 
 \Smichaelsen\Noti\EventRegistry::registerEvent(
-    (new \Smichaelsen\Noti\Domain\Model\Event(\Smichaelsen\Noti\Hook\SystemLogHook::NOTIFICATION_EVENT_SYSLOG))
+    (new \Smichaelsen\Noti\Domain\Model\Event(\Smichaelsen\Noti\Hook\SystemLogHook::NOTIFICATION_EVENT_SYSLOG, $_EXTKEY))
         ->setTitle('System Log')
         ->addPlaceholder('msg')
         ->addPlaceholder('extKey')
