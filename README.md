@@ -21,7 +21,7 @@ Let's you configure a list of mail addresses that receive a notification when th
 
 ### Slack Notification
 
-Sends a message to our favorite chat app when the event is triggered.
+Sends a message to our favorite chat app when the event is triggered. 
 
 ## How do I implement it in my extension?
 

@@ -15,6 +15,10 @@ class EmailNotifier extends AbstractNotifier
      */
     public function notify(Event $event, $subscriptionRecord, $variables)
     {
+        $notificationContent = trim($this->renderContentWithFluid($subscriptionRecord['text'], $variables));
+        if (empty($notificationContent)) {
+            return;
+        }
         $addresses = GeneralUtility::trimExplode(',', str_replace("\n", ',', $this->renderContentWithFluid($subscriptionRecord['addresses'], $variables)));
         $addresses = array_filter($addresses, function($address) {
             return GeneralUtility::validEmail($address);
@@ -28,7 +32,7 @@ class EmailNotifier extends AbstractNotifier
             $mailMessage->setFrom($from);
             $mailMessage->setBcc($addresses);
             $mailMessage->setSubject($subject);
-            $mailMessage->setBody($this->renderContentWithFluid($subscriptionRecord['text'], $variables));
+            $mailMessage->setBody($notificationContent);
             $mailMessage->send();
         }
     }

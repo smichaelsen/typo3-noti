@@ -15,11 +15,15 @@ class SlackNotifier extends AbstractNotifier
      */
     public function notify(Event $event, $subscriptionRecord, $variables)
     {
+        $notificationContent = trim($this->renderContentWithFluid($subscriptionRecord['text'], $variables));
+        if (empty($notificationContent)) {
+            return;
+        }
         $channel = empty($subscriptionRecord['slack_channel']) ? '#general' : '#' . ltrim($this->renderContentWithFluid($subscriptionRecord['slack_channel'], $variables), '#');
         $data = 'payload=' . urlencode(json_encode([
                 'channel' => $channel,
                 'icon_emoji' => ':bellhop_bell:',
-                'text' => $this->renderContentWithFluid($subscriptionRecord['text'], $variables),
+                'text' => $notificationContent,
                 'username' => 'noti',
             ]));
 

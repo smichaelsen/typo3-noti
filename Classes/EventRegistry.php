@@ -25,9 +25,6 @@ class EventRegistry
      */
     public static function registerEvent(Event $event)
     {
-        if (isset(self::$eventRegistry[$event->getIdentifier()])) {
-            throw new Exception('Event ' . $event->getIdentifier() . ' was already registered.', 1475677895);
-        }
         self::$eventRegistry[$event->getIdentifier()] = $event;
     }
 

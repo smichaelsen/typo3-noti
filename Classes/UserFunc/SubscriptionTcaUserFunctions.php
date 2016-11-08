@@ -33,7 +33,10 @@ class SubscriptionTcaUserFunctions
         if (count($availablePlaceholders)) {
             $content = '<p>These placeholders are available to be used in the notification text.</p><dl>';
             foreach ($availablePlaceholders as $placeholder => $description) {
-                $content .= '<dt>{' . $placeholder . '}</dt><dd>' . $this->getLanguageService()->sL($description) . '</dd>';
+                $content .= '<dt>{' . $placeholder . '}</dt>';
+                if (!empty($description)) {
+                    $content .= '<dd>' . $this->getLanguageService()->sL($description) . '</dd>';
+                }
             }
             $content .= '</dl>';
         } else {

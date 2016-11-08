@@ -72,7 +72,7 @@ class Event
      * @param string $description Description or LLL reference
      * @return $this
      */
-    public function addPlaceholder($key, $description)
+    public function addPlaceholder($key, $description = '')
     {
         $this->placeholders[$key] = $description;
         return $this;
