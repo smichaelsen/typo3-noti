@@ -12,6 +12,8 @@ But wait.. the client wants to configure the recipient mail addresses? Don't rac
 Using noti an extension can trigger an event like "A new user registered", "we received a new product rating", "the daily data import went wrong".
 
 In the TYPO3 backend you can create subscription records for those events.
+
+![Backend form screenshot](/Documentation/Screenshots/example_backend_form.png?raw=true)
  
 Right now there are two notification types available:
  
