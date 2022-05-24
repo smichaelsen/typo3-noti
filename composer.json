@@ -2,11 +2,16 @@
     "name": "smichaelsen/noti",
     "type": "typo3-cms-extension",
     "require": {
-        "typo3/cms-core": "^7.6"
+        "typo3/cms-core": "^10.4"
     },
     "autoload": {
         "psr-4": {
             "Smichaelsen\\Noti\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "noti"
         }
     }
 }
