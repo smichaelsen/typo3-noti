@@ -1,19 +1,21 @@
 <?php
 namespace Smichaelsen\Noti\Hook;
 
-use Smichaelsen\Noti\EventRegistry;
+use Smichaelsen\Noti\Service\NotificationService;
 
 class SystemLogHook
 {
+    public const NOTIFICATION_EVENT_SYSLOG = 'syslog';
+    private NotificationService $notificationService;
 
-    const NOTIFICATION_EVENT_SYSLOG = 'syslog';
-
-    /**
-     * @param array $params
-     */
-    public function logToNoti(array $params)
+    public function __construct(NotificationService $notificationService)
     {
-        EventRegistry::triggerEvent(self::NOTIFICATION_EVENT_SYSLOG, $params);
+        $this->notificationService = $notificationService;
+    }
+
+    public function logToNoti(array $params): void
+    {
+        $this->notificationService->triggerEvent(self::NOTIFICATION_EVENT_SYSLOG, $params);
     }
 
 }

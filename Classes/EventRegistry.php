@@ -1,81 +1,36 @@
 <?php
 namespace Smichaelsen\Noti;
 
-use Exception;
 use Smichaelsen\Noti\Domain\Model\Event;
-use Smichaelsen\Noti\Service\NotificationService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\SingletonInterface;
 
-class EventRegistry
+class EventRegistry implements SingletonInterface
 {
+    protected array $eventRegistry = [];
 
-    /**
-     * @var array
-     */
-    protected static $eventRegistry = [];
-
-    /**
-     * @var NotificationService
-     */
-    protected static $notificationService;
-
-    /**
-     * @param Event $event
-     * @throws Exception
-     */
-    public static function registerEvent(Event $event)
+    public function registerEvent(Event $event): void
     {
-        self::$eventRegistry[$event->getIdentifier()] = $event;
+        $this->eventRegistry[$event->getIdentifier()] = $event;
     }
 
     /**
      * @return Event[]
      */
-    public static function getEvents()
+    public function getEvents(): array
     {
-        return self::$eventRegistry;
+        return $this->eventRegistry;
     }
 
-    /**
-     * @param string $identifier
-     * @param array $variables
-     */
-    public static function triggerEvent($identifier, $variables = [])
-    {
-        self::getNotificationService()->notify(self::getEvent($identifier), $variables);
-    }
-
-    /**
-     * @param string $identifier
-     * @return Event
-     * @throws Exception
-     */
-    public static function getEvent($identifier)
+    public function getEvent(string $identifier): Event
     {
         if (!self::hasEvent($identifier)) {
             throw new \Exception('Event ' . $identifier() . ' is not registered', 1475678573);
         }
-        return self::$eventRegistry[$identifier];
+        return $this->eventRegistry[$identifier];
     }
 
-    /**
-     * @param string $identifier
-     * @return bool
-     */
-    public static function hasEvent($identifier)
+    public function hasEvent(string $identifier): bool
     {
-        return isset(self::$eventRegistry[$identifier]);
+        return isset($this->eventRegistry[$identifier]);
     }
-
-    /**
-     * @return NotificationService
-     */
-    protected static function getNotificationService()
-    {
-        if (!self::$notificationService instanceof NotificationService) {
-            self::$notificationService = GeneralUtility::makeInstance(NotificationService::class);
-        }
-        return self::$notificationService;
-    }
-
 }

@@ -1,0 +1,20 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Smichaelsen\Noti\EventRegistry:
+    public: true
+
+  Smichaelsen\Noti\Hook\:
+    resource: '../Classes/Hook/*'
+    public: true
+
+  Smichaelsen\Noti\Service\:
+    resource: '../Classes/Service/*'
+    public: true
+
+  Smichaelsen\Noti\UserFunc\:
+    resource: '../Classes/UserFunc/*'
+    public: true

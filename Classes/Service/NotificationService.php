@@ -2,50 +2,58 @@
 namespace Smichaelsen\Noti\Service;
 
 use Smichaelsen\Noti\Domain\Model\Event;
+use Smichaelsen\Noti\EventRegistry;
 use Smichaelsen\Noti\Notifier\NotifierInterface;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Lang\LanguageService;
 
 class NotificationService implements SingletonInterface
 {
+    private Connection $connection;
+    private EventRegistry $eventRegistry;
+    private LanguageService $languageService;
+
+    public function __construct(ConnectionPool $connectionPool, EventRegistry $eventRegistry, LanguageService $languageService)
+    {
+        $this->connection = $connectionPool->getConnectionForTable('tx_noti_subscription');
+        $this->eventRegistry = $eventRegistry;
+        $this->languageService = $languageService;
+    }
+
+    public function triggerEvent(string $identifier, array $variables = []): void
+    {
+        $this->notify($this->eventRegistry->getEvent($identifier), $variables);
+    }
 
     /**
      * @param Event $event
      * @param array $variables
      */
-    public function notify(Event $event, $variables)
+    public function notify(Event $event, array $variables): void
     {
         $subscriptions = $this->loadSubscriptions($event);
         foreach ($subscriptions as $subscription) {
             $notifier = $this->getNotifierForSubscription($subscription);
-            $variables['eventTitle'] = $this->getLanguageService()->sL($event->getTitle());
+            $variables['eventTitle'] = $this->languageService->sL($event->getTitle());
             $variables['notifier'] = $notifier;
             $variables['notifierClassName'] = get_class($notifier);
             $notifier->notify($event, $subscription, $variables);
         }
     }
 
-    /**
-     * @param Event $event
-     * @return array
-     */
-    protected function loadSubscriptions(Event $event)
+    protected function loadSubscriptions(Event $event): array
     {
-        return $this->getDatabaseConnection()->exec_SELECTgetRows(
-            '*',
+        return $this->connection->select(
+            ['*'],
             'tx_noti_subscription',
-            'event = ' . $this->getDatabaseConnection()->fullQuoteStr($event->getIdentifier(), 'tx_noti_subscription') . ' AND deleted = 0 AND hidden = 0'
-        );
+            ['event', $event->getIdentifier()]
+        )->fetchAllAssociative();
     }
 
-    /**
-     * @param string $subscription
-     * @return NotifierInterface
-     * @throws \Exception
-     */
-    protected function getNotifierForSubscription($subscription)
+    protected function getNotifierForSubscription(array $subscription): NotifierInterface
     {
         $notifier = GeneralUtility::makeInstance($subscription['type']);
         if (!$notifier instanceof NotifierInterface) {
@@ -53,25 +61,4 @@ class NotificationService implements SingletonInterface
         }
         return $notifier;
     }
-
-    /**
-     * @return DatabaseConnection
-     */
-    protected function getDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
-    }
-
-    /**
-     * @return LanguageService
-     */
-    protected function getLanguageService()
-    {
-        if (!$GLOBALS['LANG'] instanceof LanguageService) {
-            $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
-            $GLOBALS['LANG']->init('default');
-        }
-        return $GLOBALS['LANG'];
-    }
-
 }

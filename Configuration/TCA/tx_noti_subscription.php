@@ -44,6 +44,7 @@ return [
             'label' => $lll . '.available_placeholders',
             'config' => [
                 'type' => 'user',
+                'renderType' => 'notiAvailablePlaceholdersField',
                 'userFunc' => \Smichaelsen\Noti\UserFunc\SubscriptionTcaUserFunctions::class . '->availablePlaceholdersField',
             ],
         ],
