@@ -1,4 +1,5 @@
 <?php
+
 namespace Smichaelsen\Noti;
 
 use Smichaelsen\Noti\Domain\Model\Event;

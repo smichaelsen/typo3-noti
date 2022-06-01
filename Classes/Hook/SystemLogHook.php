@@ -1,4 +1,5 @@
 <?php
+
 namespace Smichaelsen\Noti\Hook;
 
 use Smichaelsen\Noti\Service\NotificationService;
@@ -17,5 +18,4 @@ class SystemLogHook
     {
         $this->notificationService->triggerEvent(self::NOTIFICATION_EVENT_SYSLOG, $params);
     }
-
 }

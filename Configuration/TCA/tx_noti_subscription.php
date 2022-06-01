@@ -1,6 +1,7 @@
 <?php
+
 if (!defined('TYPO3_MODE')) {
-    die ('Access denied.');
+    die('Access denied.');
 }
 
 $lll = 'LLL:EXT:noti/Resources/Private/Language/locallang_db.xlf:tx_noti_subscription';
@@ -20,7 +21,7 @@ return [
     'types' => [
         '1' => ['showitem' => 'title, event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
         \Smichaelsen\Noti\Notifier\EmailNotifier::class => ['showitem' => 'title, event, type, --palette--;' . $lll . '.palette.email;email, --palette--;' . $lll . '.palette.notification;notification'],
-        \Smichaelsen\Noti\Notifier\SlackNotifier::class => ['showitem' => 'title, event, type, --palette--;' . $lll . '.palette.slack;slack, --palette--;' . $lll . '.palette.notification;notification']
+        \Smichaelsen\Noti\Notifier\SlackNotifier::class => ['showitem' => 'title, event, type, --palette--;' . $lll . '.palette.slack;slack, --palette--;' . $lll . '.palette.notification;notification'],
     ],
     'palettes' => [
         'email' => [
@@ -81,7 +82,7 @@ return [
             'label' => $lll . '.slack_endpoint',
             'config' => [
                 'type' => 'input',
-                'placeholder' => 'You can get your webhook endpoint from your Slack settings'
+                'placeholder' => 'You can get your webhook endpoint from your Slack settings',
             ],
         ],
         'text' => [
@@ -94,7 +95,7 @@ return [
             'label' => $lll . '.title',
             'config' => [
                 'type' => 'input',
-                'eval' => 'required'
+                'eval' => 'required',
             ],
         ],
         'type' => [
@@ -105,7 +106,7 @@ return [
                 'items' => [
                     [$lll . '.type.EmailNotifier', \Smichaelsen\Noti\Notifier\EmailNotifier::class],
                     [$lll . '.type.SlackNotifier', \Smichaelsen\Noti\Notifier\SlackNotifier::class],
-                ]
+                ],
             ],
         ],
     ],

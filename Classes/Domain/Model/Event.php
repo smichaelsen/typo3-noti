@@ -1,37 +1,32 @@
 <?php
+
 namespace Smichaelsen\Noti\Domain\Model;
 
 class Event
 {
-
     /**
      * @var string
      */
-    protected $extensionKey;
+    protected string $extensionKey;
 
     /**
      * @var string Unique event identifier
      */
-    protected $identifier;
+    protected string $identifier;
 
     /**
      * Label or LLL reference
      *
      * @var string
      */
-    protected $title;
+    protected string $title;
 
     /**
      * @var array
      */
-    protected $placeholders = [];
+    protected array $placeholders = [];
 
-    /**
-     * @param string $identifier
-     * @param string $extensionKey
-     * @throws \InvalidArgumentException
-     */
-    public function __construct($identifier, $extensionKey)
+    public function __construct(string $identifier, string $extensionKey)
     {
         if (empty($identifier)) {
             throw new \InvalidArgumentException('The $identifier must not be empty', 1475677768);
@@ -43,57 +38,35 @@ class Event
         $this->identifier = $identifier;
     }
 
-    /**
-     * @return string
-     */
-    public function getExtensionKey()
+    public function getExtensionKey(): string
     {
         return $this->extensionKey;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * @param string $title Title or LLL reference
-     * @return $this
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return empty($this->title) ? $this->identifier : $this->title;
     }
 
-    /**
-     * @return array
-     */
-    public function getPlaceholders()
+    public function getPlaceholders(): array
     {
         return $this->placeholders;
     }
 
-    /**
-     * @param string $key
-     * @param string $description Description or LLL reference
-     * @return $this
-     */
-    public function addPlaceholder($key, $description = '')
+    public function addPlaceholder(string $key, string $description = ''): self
     {
         $this->placeholders[$key] = $description;
         return $this;
     }
-
 }
