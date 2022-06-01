@@ -1,0 +1,18 @@
+<html
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:render
+    partial="ToolbarItem"
+    arguments="{
+        title: 'Notification Center',
+        icon: '{core:icon(identifier: \'ext-noti-bell\', size: \'small\', alternativeMarkupIdentifier: \'inline\')}'
+    }"
+/>
+<f:if condition="{unreadNotificationsCount}">
+    <span class="toolbar-item-badge badge badge-danger">{unreadNotificationsCount}</span>
+</f:if>
+
+</html>

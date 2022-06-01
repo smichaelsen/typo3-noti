@@ -3,6 +3,8 @@
 namespace Smichaelsen\Noti\Service;
 
 use Smichaelsen\Noti\Domain\Model\Event;
+use Smichaelsen\Noti\Event\LogEntryNotification;
+use Smichaelsen\Noti\Event\Notification;
 use Smichaelsen\Noti\EventRegistry;
 use Smichaelsen\Noti\Notifier\NotifierInterface;
 use TYPO3\CMS\Core\Database\Connection;
@@ -22,6 +24,19 @@ class NotificationService implements SingletonInterface
         $this->connection = $connectionPool->getConnectionForTable('tx_noti_subscription');
         $this->eventRegistry = $eventRegistry;
         $this->languageService = $languageService;
+    }
+
+    public function __invoke(Notification $notification): Notification
+    {
+        $subscriptions = $this->loadSubscriptions($notification->getIdentifier());
+        foreach ($subscriptions as $subscription) {
+            $notifier = $this->getNotifierForSubscription($subscription);
+            $variables['eventTitle'] = $this->languageService->sL($notification->getTitle());
+            $variables['notifier'] = $notifier;
+            $variables['notifierClassName'] = get_class($notifier);
+            $notifier->notify($event, $subscription, $variables);
+        }
+        return $notification;
     }
 
     public function triggerEvent(string $identifier, array $variables = []): void
@@ -61,5 +76,19 @@ class NotificationService implements SingletonInterface
             throw new \Exception($subscription['type'] . ' doesn\'t implement the NotifierInterface', 1475737136);
         }
         return $notifier;
+    }
+
+    /**
+     * @return Notification[]
+     */
+    public function loadUnreadNotifications(): array
+    {
+        return [
+            new LogEntryNotification('New log entry (' . \Psr\Log\LogLevel::ERROR . ')', ['severity' => \Psr\Log\LogLevel::ERROR]),
+            new LogEntryNotification('New log entry (' . \Psr\Log\LogLevel::WARNING . ')', ['severity' => \Psr\Log\LogLevel::WARNING]),
+            new LogEntryNotification('New log entry (' . \Psr\Log\LogLevel::INFO . ')', ['severity' => \Psr\Log\LogLevel::INFO]),
+            new LogEntryNotification('New log entry (' . \Psr\Log\LogLevel::ERROR . ')', ['severity' => \Psr\Log\LogLevel::ERROR]),
+            new LogEntryNotification('New log entry (' . \Psr\Log\LogLevel::ERROR . ')', ['severity' => \Psr\Log\LogLevel::ERROR]),
+        ];
     }
 }

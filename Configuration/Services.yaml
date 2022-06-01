@@ -7,13 +7,27 @@ services:
   Smichaelsen\Noti\EventRegistry:
     public: true
 
+  Smichaelsen\Noti\Backend\Toolbar\:
+    resource: '../Classes/Backend/Toolbar/*'
+    public: true
+
   Smichaelsen\Noti\Hook\:
     resource: '../Classes/Hook/*'
+    public: true
+
+  Smichaelsen\Noti\Log\:
+    resource: '../Classes/Log/*'
     public: true
 
   Smichaelsen\Noti\Service\:
     resource: '../Classes/Service/*'
     public: true
+
+  Smichaelsen\Noti\Service\NotificationService:
+    tags:
+      - name: event.listener
+        identifier: 'NotiNotificationService'
+        event: \Smichaelsen\Noti\Event\Notification
 
   Smichaelsen\Noti\UserFunc\:
     resource: '../Classes/UserFunc/*'
