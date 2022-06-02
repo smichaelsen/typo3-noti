@@ -1,12 +1,45 @@
 <html
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
 
 <h2>Manage your subscriptions</h2>
 
-<f:for each="{events}" as="eventLabel" key="eventKey">
-    <label><input type="checkbox" name="{eventKey}"> {eventLabel}</label><br>
-</f:for>
+<form action="{formAction}" method="POST">
+    <div class="panel panel-default" style="max-width: 800px">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <f:for each="{notifiers}" as="notifierLabel" key="notifierKey">
+                        <th style="text-align: center">{notifierLabel}</th>
+                    </f:for>
+                </tr>
+            </thead>
+            <tbody>
+                <f:for each="{events}" as="eventLabel" key="eventKey">
+                    <tr>
+                        <td>{eventLabel}</td>
+                        <f:for each="{notifiers}" as="notifierLabel" key="notifierKey">
+                            <td align="center">
+                                <label style="padding: 0 20px;">
+                                    <f:variable name="subscriptionKey" value="{eventKey}_{notifierKey}"/>
+                                    <input type="hidden" name="tx_noti[{subscriptionKey}]" value="0"/>
+                                    <input
+                                        type="checkbox"
+                                        name="tx_noti[{subscriptionKey}]"
+                                        {v:condition.iterator.contains(needle: subscriptionKey, haystack: existingSubscriptions, then: 'checked')}
+                                    />
+                                </label>
+                            </td>
+                        </f:for>
+                    </tr>
+                </f:for>
+            </tbody>
+        </table>
+    </div>
+    <input type="submit" class="btn btn-default" value="Save" />
+</form>
 
 </html>

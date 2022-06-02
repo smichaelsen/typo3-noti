@@ -23,6 +23,19 @@ services:
     resource: '../Classes/Log/*'
     public: true
 
+  Smichaelsen\Noti\Notifier\NotifierRegistry:
+    public: true
+
+  Smichaelsen\Noti\Notifier\EmailNotifier:
+    tags:
+      - name: noti.notifier
+        label: E-Mail
+
+  Smichaelsen\Noti\Notifier\NotificationCenterNotifier:
+    tags:
+      - name: noti.notifier
+        label: TYPO3
+
   Smichaelsen\Noti\Service\:
     resource: '../Classes/Service/*'
     public: true
