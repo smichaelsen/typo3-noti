@@ -1,0 +1,12 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<h2>Manage your subscriptions</h2>
+
+<f:for each="{events}" as="eventLabel" key="eventKey">
+    <label><input type="checkbox" name="{eventKey}"> {eventLabel}</label><br>
+</f:for>
+
+</html>

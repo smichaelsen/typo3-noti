@@ -4,20 +4,20 @@ services:
     autoconfigure: true
     public: false
 
+  Smichaelsen\Noti\Controller\:
+    resource: '../Classes/Controller/*'
+    public: true
+
+  Smichaelsen\Noti\Backend\Toolbar\:
+    resource: '../Classes/Backend/Toolbar/*'
+    public: true
+
   Smichaelsen\Noti\Event\EventRegistry:
     public: true
 
   Smichaelsen\Noti\Event\LogEntry:
     tags:
       - name: noti.event
-
-  Smichaelsen\Noti\Backend\Toolbar\:
-    resource: '../Classes/Backend/Toolbar/*'
-    public: true
-
-  Smichaelsen\Noti\Hook\:
-    resource: '../Classes/Hook/*'
-    public: true
 
   Smichaelsen\Noti\Log\:
     resource: '../Classes/Log/*'
