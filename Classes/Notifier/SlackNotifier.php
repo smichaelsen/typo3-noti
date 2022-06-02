@@ -2,11 +2,9 @@
 namespace Smichaelsen\Noti\Notifier;
 
 use Smichaelsen\Noti\Domain\Model\Event;
-use TYPO3\CMS\Lang\LanguageService;
 
 class SlackNotifier extends AbstractNotifier
 {
-
     /**
      * @param Event $event
      * @param array $subscriptionRecord
@@ -34,5 +32,4 @@ class SlackNotifier extends AbstractNotifier
         curl_exec($ch);
         curl_close($ch);
     }
-
 }

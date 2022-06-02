@@ -2,6 +2,7 @@
 namespace Smichaelsen\Noti\Service;
 
 use Smichaelsen\Noti\Domain\Model\Event;
+use Smichaelsen\Noti\Event\EventInterface;
 use Smichaelsen\Noti\EventRegistry;
 use Smichaelsen\Noti\Notifier\NotifierInterface;
 use TYPO3\CMS\Core\Database\Connection;
@@ -21,6 +22,19 @@ class NotificationService implements SingletonInterface
         $this->connection = $connectionPool->getConnectionForTable('tx_noti_subscription');
         $this->eventRegistry = $eventRegistry;
         $this->languageService = $languageService;
+    }
+
+    public function __invoke(EventInterface $event): EventInterface
+    {
+        $subscriptions = $this->loadSubscriptions($notification->getIdentifier());
+        foreach ($subscriptions as $subscription) {
+            $notifier = $this->getNotifierForSubscription($subscription);
+            $variables['eventTitle'] = $this->languageService->sL($notification->getTitle());
+            $variables['notifier'] = $notifier;
+            $variables['notifierClassName'] = get_class($notifier);
+            $notifier->notify($event, $subscription, $variables);
+        }
+        return $notification;
     }
 
     public function triggerEvent(string $identifier, array $variables = []): void
