@@ -4,8 +4,12 @@ services:
     autoconfigure: true
     public: false
 
-  Smichaelsen\Noti\EventRegistry:
+  Smichaelsen\Noti\Event\EventRegistry:
     public: true
+
+  Smichaelsen\Noti\Event\LogEntry:
+    tags:
+      - name: noti.event
 
   Smichaelsen\Noti\Backend\Toolbar\:
     resource: '../Classes/Backend/Toolbar/*'
@@ -28,7 +32,3 @@ services:
       - name: event.listener
         identifier: 'NotiNotificationService'
         event: Smichaelsen\Noti\Event\EventInterface
-
-  Smichaelsen\Noti\UserFunc\:
-    resource: '../Classes/UserFunc/*'
-    public: true
