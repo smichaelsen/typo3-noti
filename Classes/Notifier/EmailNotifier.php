@@ -1,4 +1,5 @@
 <?php
+
 namespace Smichaelsen\Noti\Notifier;
 
 use Smichaelsen\Noti\Event\EventInterface;

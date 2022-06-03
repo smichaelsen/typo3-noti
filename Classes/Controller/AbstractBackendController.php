@@ -82,6 +82,4 @@ abstract class AbstractBackendController
     {
         return $GLOBALS['BE_USER'];
     }
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Smichaelsen\Noti\Notifier;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,5 +34,4 @@ abstract class AbstractNotifier implements NotifierInterface
         }
         return $GLOBALS['LANG'];
     }
-
 }
