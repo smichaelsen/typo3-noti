@@ -17,4 +17,9 @@ class NotifierRegistry
     {
         return $this->notifiers;
     }
+
+    public function getAvailableNotifierKeys(): array
+    {
+        return array_keys($this->notifiers);
+    }
 }

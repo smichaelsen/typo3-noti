@@ -24,7 +24,7 @@
                         <f:for each="{notifiers}" as="notifierLabel" key="notifierKey">
                             <td align="center">
                                 <label style="padding: 0 20px;">
-                                    <f:variable name="subscriptionKey" value="{eventKey}_{notifierKey}"/>
+                                    <f:variable name="subscriptionKey" value="{eventKey}|{notifierKey}"/>
                                     <input type="hidden" name="tx_noti[{subscriptionKey}]" value="0"/>
                                     <input
                                         type="checkbox"

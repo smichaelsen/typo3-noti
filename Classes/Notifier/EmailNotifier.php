@@ -1,40 +1,41 @@
 <?php
 namespace Smichaelsen\Noti\Notifier;
 
-use Smichaelsen\Noti\Domain\Model\Event;
+use Smichaelsen\Noti\Event\EventInterface;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class EmailNotifier extends AbstractNotifier
+class EmailNotifier implements NotifierInterface
 {
-
-    /**
-     * @param Event $event
-     * @param array $subscriptionRecord
-     * @param array $variables
-     */
-    public function notify(Event $event, $subscriptionRecord, $variables)
+    public function notify(EventInterface $event, int $userId)
     {
-        $notificationContent = trim($this->renderContentWithFluid($subscriptionRecord['text'], $variables));
-        if (empty($notificationContent)) {
+        $recipient = $this->getUserEmail($userId);
+        if ($recipient === null) {
             return;
         }
-        $addresses = GeneralUtility::trimExplode(',', str_replace("\n", ',', $this->renderContentWithFluid($subscriptionRecord['addresses'], $variables)));
-        $addresses = array_filter($addresses, function($address) {
-            return GeneralUtility::validEmail($address);
-        });
-        if (count($addresses)) {
-            $subject = empty($subscriptionRecord['email_subject']) ?
-                $this->getLanguageService()->sL($event->getTitle()) :
-                $this->renderContentWithFluid($subscriptionRecord['email_subject'], $variables);
-            $from = empty($subscriptionRecord['email_from']) ? 'notification@noti.org' : $this->renderContentWithFluid($subscriptionRecord['email_from'], $variables);
-            $mailMessage = GeneralUtility::makeInstance(MailMessage::class);
-            $mailMessage->setFrom($from);
-            $mailMessage->setBcc($addresses);
-            $mailMessage->setSubject($subject);
-            $mailMessage->setBody($notificationContent);
-            $mailMessage->send();
-        }
+        $subject = $event->getTitle();
+        $from = $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'] ?: 'notification@noti.org';
+        $mailMessage = GeneralUtility::makeInstance(MailMessage::class);
+        $mailMessage->setFrom($from);
+        $mailMessage->setTo($recipient);
+        $mailMessage->setSubject($subject);
+        $mailMessage->html($event->getMessage());
+        $mailMessage->send();
     }
 
+    protected function getUserEmail(int $userId): ?string
+    {
+        $userRecord = BackendUtility::getRecord('be_users', $userId, 'email');
+        if (!is_array($userRecord) || !GeneralUtility::validEmail($userRecord['email'])) {
+            return null;
+        }
+        return $userRecord['email'];
+    }
+
+    protected function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
+    }
 }

@@ -67,7 +67,7 @@ class NotificationSettingsController
             if ($choice !== 'on' && in_array($subscriptionKey, $existingSubscriptions)) {
                 $this->connection->delete('tx_noti_subscription', ['uid' => array_search($subscriptionKey, $existingSubscriptions)]);
             } elseif ($choice === 'on' && !in_array($subscriptionKey, $existingSubscriptions)) {
-                [$eventKey, $notifierKey] = explode('_', $subscriptionKey);
+                [$eventKey, $notifierKey] = explode('|', $subscriptionKey);
                 $this->connection->insert(
                     'tx_noti_subscription',
                     [
@@ -77,7 +77,7 @@ class NotificationSettingsController
                         'user' => $selectedUser,
                         'tstamp' => $GLOBALS['EXEC_TIME'],
                         'crdate' => $GLOBALS['EXEC_TIME'],
-                    ]
+                    ],
                 );
             }
         }
@@ -92,7 +92,7 @@ class NotificationSettingsController
         )->fetchAllAssociative();
         $existingSubscriptions = [];
         foreach ($result as $subscriptionRecord) {
-            $subscriptionKey = $subscriptionRecord['event_key'] . '_' . $subscriptionRecord['notifier_key'];
+            $subscriptionKey = $subscriptionRecord['event_key'] . '|' . $subscriptionRecord['notifier_key'];
             $existingSubscriptions[$subscriptionRecord['uid']] = $subscriptionKey;
         }
         return $existingSubscriptions;

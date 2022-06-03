@@ -6,6 +6,7 @@ namespace Smichaelsen\Noti\Backend\Toolbar;
 
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
@@ -20,8 +21,15 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
 
     public function checkAccess(): bool
     {
-        // TODO: Implement checkAccess() method.
-        return true;
+        $backendUser = $this->getBackendUser();
+        if ($backendUser->isAdmin()) {
+            return true;
+        }
+        if (in_array('user_notifications', GeneralUtility::trimExplode(',', $backendUser->groupData['modules']))) {
+            // user has access to notification setting, then also show the toolbar item
+            return true;
+        }
+        return false;
     }
 
     public function getItem(): string
@@ -74,5 +82,10 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
 
         $view->getRequest()->setControllerExtensionName('Noti');
         return $view;
+    }
+
+    protected function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
     }
 }
