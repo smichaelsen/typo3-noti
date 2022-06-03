@@ -4,27 +4,16 @@ services:
     autoconfigure: true
     public: false
 
-  Smichaelsen\Noti\Controller\:
-    resource: '../Classes/Controller/*'
+  Smichaelsen\Noti\:
+    resource: '../Classes/*'
     public: true
-
-  Smichaelsen\Noti\Backend\Toolbar\:
-    resource: '../Classes/Backend/Toolbar/*'
-    public: true
-
-  Smichaelsen\Noti\Event\EventRegistry:
-    public: true
+    exclude:
+      - '../Classes/CompilerPass'
+      - '../Classes/Event'
 
   Smichaelsen\Noti\Event\LogEntry:
     tags:
       - name: noti.event
-
-  Smichaelsen\Noti\Log\:
-    resource: '../Classes/Log/*'
-    public: true
-
-  Smichaelsen\Noti\Notifier\NotifierRegistry:
-    public: true
 
   Smichaelsen\Noti\Notifier\EmailNotifier:
     tags:
@@ -35,10 +24,6 @@ services:
     tags:
       - name: noti.notifier
         label: TYPO3
-
-  Smichaelsen\Noti\Service\:
-    resource: '../Classes/Service/*'
-    public: true
 
   Smichaelsen\Noti\Service\NotificationService:
     tags:

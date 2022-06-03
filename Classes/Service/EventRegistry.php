@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smichaelsen\Noti\Event;
+namespace Smichaelsen\Noti\Service;
 
 class EventRegistry
 {

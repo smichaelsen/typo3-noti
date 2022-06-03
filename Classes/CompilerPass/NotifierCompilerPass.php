@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Smichaelsen\Noti\Notifier;
+namespace Smichaelsen\Noti\CompilerPass;
 
+use Smichaelsen\Noti\Service\NotifierRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smichaelsen\Noti\Notifier;
+namespace Smichaelsen\Noti\Service;
 
 class NotifierRegistry
 {

@@ -1,58 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
 	<file source-language="en" datatype="plaintext" original="messages" date="2015-09-01T14:30:42Z">
-		<header>
-			<generator>LFEditor</generator>
-		</header>
 		<body>
 			<trans-unit id="tx_noti_subscription">
 				<source>Subscription</source>
 			</trans-unit>
-			<trans-unit id="tx_noti_subscription.addresses">
-				<source>Addresses</source>
-			</trans-unit>
-			<trans-unit id="tx_noti_subscription.available_placeholders">
-				<source>Available Placeholders</source>
-			</trans-unit>
-			<trans-unit id="tx_noti_subscription.email_from">
-				<source>Email from address</source>
-			</trans-unit>
-			<trans-unit id="tx_noti_subscription.email_subject">
-				<source>Email subject</source>
-			</trans-unit>
-			<trans-unit id="tx_noti_subscription.event">
+			<trans-unit id="tx_noti_subscription.event_key">
 				<source>Event</source>
 			</trans-unit>
-            <trans-unit id="tx_noti_subscription.palette.email">
-                <source>Email Notification Settings</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.palette.notification">
-                <source>Notification</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.palette.slack">
-                <source>Slack Notification Settings</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.slack_channel">
-                <source>Channel</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.slack_endpoint">
-                <source>Slack Webhook Endpoint</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.text">
-                <source>Text</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.title">
-                <source>Name this subscription</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.type">
-                <source>Notification type</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.type.EmailNotifier">
-                <source>Email</source>
-            </trans-unit>
-            <trans-unit id="tx_noti_subscription.type.SlackNotifier">
-                <source>Slack</source>
-            </trans-unit>
+			<trans-unit id="tx_noti_subscription.notifier_key">
+				<source>Notification Type</source>
+			</trans-unit>
+			<trans-unit id="tx_noti_subscription.user">
+				<source>User</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
