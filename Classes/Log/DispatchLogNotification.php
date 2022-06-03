@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Smichaelsen\Noti\Log;
 
 use Smichaelsen\Noti\Event\LogEntry;
-use TYPO3\CMS\Adminpanel\Service\EventDispatcher;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Log\LogRecord;
 use TYPO3\CMS\Core\Log\Processor\ProcessorInterface;
 use TYPO3\CMS\Core\Registry;

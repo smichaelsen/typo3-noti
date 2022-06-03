@@ -38,32 +38,40 @@
 
 <h2>Your notifications</h2>
 
-<div class="tx-noti panel panel-default" style="max-width: 800px">
-    <table class="table table-striped table-hover">
-        <tbody>
-            <f:for each="{notifications}" as="notification">
-                <tr>
-                    <td style="vertical-align: top;">
-                        {notification.crdate -> f:format.date(format: 'd.m.Y H:i')}
-                    </td>
-                    <td style="width: 600px; vertical-align: top;">
-                        <details>
-                            <summary
-                                data-mark-as-read-ajax-uri="{f:be.uri(route: 'ajax_user_notifications', parameters: {readNotificationUid: notification.uid})}"
-                                data-is-read="{notification.read}"
-                                class="t3-js-notificaton-mark-as-read"
-                            >
-                                <core:icon identifier="{notification.icon_identifier -> v:or(alternative: 'actions-dot')}" alternativeMarkupIdentifier="inline"/>
-                                {notification.title}
-                            </summary>
-                            {notification.message}
-                        </details>
-                    </td>
-                </tr>
-            </f:for>
-        </tbody>
-    </table>
-</div>
-<a href="{markAllReadLink}" class="btn btn-default">Mark all as read</a>
+<f:if condition="{notifications -> f:count()}">
+    <f:then>
+        <div class="tx-noti panel panel-default" style="max-width: 800px">
+            <table class="table table-striped table-hover">
+                <tbody>
+                <f:for each="{notifications}" as="notification">
+                    <tr>
+                        <td style="vertical-align: top;">
+                            {notification.crdate -> f:format.date(format: 'd.m.Y H:i')}
+                        </td>
+                        <td style="width: 600px; vertical-align: top;">
+                            <details>
+                                <summary
+                                    data-mark-as-read-ajax-uri="{f:be.uri(route: 'ajax_user_notifications', parameters: {readNotificationUid: notification.uid})}"
+                                    data-is-read="{notification.read}"
+                                    class="t3-js-notificaton-mark-as-read"
+                                >
+                                    <core:icon identifier="{notification.icon_identifier -> v:or(alternative: 'actions-dot')}" alternativeMarkupIdentifier="inline"/>
+                                    {notification.title}
+                                </summary>
+                                {notification.message}
+                            </details>
+                        </td>
+                    </tr>
+                </f:for>
+                </tbody>
+            </table>
+        </div>
+        <a href="{markAllReadLink}" class="btn btn-default">Mark all as read</a>
+    </f:then>
+    <f:else>
+        <p>🏝 You have no notifications.</p>
+    </f:else>
+</f:if>
+
 
 </html>

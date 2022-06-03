@@ -22,15 +22,7 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
 
     public function checkAccess(): bool
     {
-        $backendUser = $this->getBackendUser();
-        if ($backendUser->isAdmin()) {
-            return true;
-        }
-        if (in_array('user_notifications', GeneralUtility::trimExplode(',', $backendUser->groupData['modules']))) {
-            // user has access to notification setting, then also show the toolbar item
-            return true;
-        }
-        return false;
+        return true;
     }
 
     public function getItem(): string
@@ -57,6 +49,7 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
         $latestUnreadNotifications = array_slice($unreadNotifications, 0, 3);
         $view->assign('unreadNotificationsCount', count($unreadNotifications));
         $view->assign('latestUnreadNotifications', $latestUnreadNotifications);
+        $view->assign('hasSettingsAccess', $this->hasSettingsAccess());
         return $view->render();
     }
 
@@ -96,6 +89,18 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
 
         $view->getRequest()->setControllerExtensionName('Noti');
         return $view;
+    }
+
+    private function hasSettingsAccess(): bool
+    {
+        $backendUser = $this->getBackendUser();
+        if ($backendUser->isAdmin()) {
+            return true;
+        }
+        if (in_array('user_notification_settings', GeneralUtility::trimExplode(',', $backendUser->groupData['modules']))) {
+            return true;
+        }
+        return false;
     }
 
     protected function getBackendUser(): BackendUserAuthentication

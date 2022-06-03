@@ -42,10 +42,10 @@ class LogEntry implements EventInterface
     public static function getAllPossibleVariants(): array
     {
         return [
-            LogLevel::EMERGENCY => 'Emergency level log entry',
-            LogLevel::ALERT => 'Alert level log entry',
-            LogLevel::CRITICAL => 'Critical level log entry',
-            LogLevel::ERROR => 'Error level log entry',
+            LogLevel::EMERGENCY => 'New Emergency level log entry',
+            LogLevel::ALERT => 'New Alert level log entry',
+            LogLevel::CRITICAL => 'New Critical level log entry',
+            LogLevel::ERROR => 'New Error level log entry',
         ];
     }
 }
