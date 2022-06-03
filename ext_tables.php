@@ -10,7 +10,7 @@ if (!defined('TYPO3_MODE')) {
     'top',
     '',
     [
-        'routeTarget' => \Smichaelsen\Noti\Controller\NotificationSettingsController::class . '::subscriptionsAction',
+        'routeTarget' => \Smichaelsen\Noti\Controller\NotificationSettingsController::class . '::handleRequest',
         'access' => 'user,group',
         'name' => 'user_notifications',
         'icon' => 'EXT:noti/Resources/Public/Icons/bell.svg',

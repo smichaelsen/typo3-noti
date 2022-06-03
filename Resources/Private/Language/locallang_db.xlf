@@ -2,6 +2,21 @@
 <xliff version="1.0">
 	<file source-language="en" datatype="plaintext" original="messages" date="2015-09-01T14:30:42Z">
 		<body>
+			<trans-unit id="tx_noti_notification">
+				<source>Notification</source>
+			</trans-unit>
+			<trans-unit id="tx_noti_notification.message">
+				<source>Message</source>
+			</trans-unit>
+			<trans-unit id="tx_noti_notification.read">
+				<source>Is read</source>
+			</trans-unit>
+			<trans-unit id="tx_noti_notification.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_noti_notification.user">
+				<source>user</source>
+			</trans-unit>
 			<trans-unit id="tx_noti_subscription">
 				<source>Subscription</source>
 			</trans-unit>

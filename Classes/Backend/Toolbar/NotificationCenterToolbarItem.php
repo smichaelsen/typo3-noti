@@ -7,15 +7,19 @@ namespace Smichaelsen\Noti\Backend\Toolbar;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class NotificationCenterToolbarItem implements ToolbarItemInterface
 {
+    private Connection $connection;
     private UriBuilder $uriBuilder;
 
-    public function __construct(UriBuilder $uriBuilder)
+    public function __construct(ConnectionPool $connectionPool, UriBuilder $uriBuilder)
     {
+        $this->connection = $connectionPool->getConnectionForTable('tx_noti_notification');
         $this->uriBuilder = $uriBuilder;
     }
 
@@ -36,7 +40,11 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
     {
         $view = $this->getFluidTemplateObject('NotificationCenterToolbarItem.html');
         $unreadNotifications = $this->loadUnreadNotifications();
-        $view->assign('unreadNotificationsCount', count($unreadNotifications));
+        $count = count($unreadNotifications);
+        if ($count > 99) {
+            $count = '99+';
+        }
+        $view->assign('unreadNotificationsCount', $count);
         return $view->render();
     }
 
@@ -58,7 +66,17 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
 
     private function loadUnreadNotifications(): array
     {
-        return [];
+        return $this->connection->select(
+            ['uid', 'title', 'icon_identifier'],
+            'tx_noti_notification',
+            [
+                'user' => $this->getBackendUser()->user['uid'],
+                'read' => '0',
+            ],
+            [],
+            [],
+            100,
+        )->fetchAllAssociative();
     }
 
     public function getAdditionalAttributes()

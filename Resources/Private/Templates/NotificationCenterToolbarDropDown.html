@@ -11,7 +11,7 @@
     <f:for each="{latestUnreadNotifications}" as="notification">
         <div class="dropdown-table-row">
             <div class="dropdown-table-column dropdown-table-icon">
-                <core:icon identifier="{notification.iconIdentifier -> v:or(alternative: 'actions-dot')}" alternativeMarkupIdentifier="inline"/>
+                <core:icon identifier="{notification.icon_identifier -> v:or(alternative: 'actions-dot')}" alternativeMarkupIdentifier="inline"/>
             </div>
             <div class="dropdown-table-column dropdown-table-title">
                 {notification.title}
