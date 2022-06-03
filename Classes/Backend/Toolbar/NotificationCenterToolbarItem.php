@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Smichaelsen\Noti\Backend\Toolbar;
 
-use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\Connection;
@@ -15,12 +14,10 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class NotificationCenterToolbarItem implements ToolbarItemInterface
 {
     private Connection $connection;
-    private UriBuilder $uriBuilder;
 
-    public function __construct(ConnectionPool $connectionPool, UriBuilder $uriBuilder)
+    public function __construct(ConnectionPool $connectionPool)
     {
         $this->connection = $connectionPool->getConnectionForTable('tx_noti_notification');
-        $this->uriBuilder = $uriBuilder;
     }
 
     public function checkAccess(): bool
@@ -60,7 +57,6 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
         $latestUnreadNotifications = array_slice($unreadNotifications, 0, 3);
         $view->assign('unreadNotificationsCount', count($unreadNotifications));
         $view->assign('latestUnreadNotifications', $latestUnreadNotifications);
-        $view->assign('notificationSettingsUrl', '');//$this->uriBuilder->buildUriFromRoute('noti_settings'));
         return $view->render();
     }
 

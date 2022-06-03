@@ -7,7 +7,20 @@
 
 <h3 class="dropdown-headline">Notifications</h3>
 
-<div class="dropdown-table" style="margin-bottom: 25px">
+<script type="application/javascript">
+    window.addEventListener('load', function() {
+       document.querySelectorAll('.t3-js-target-iframe').forEach(function(el) {
+            el.addEventListener('click', function(clickEvent) {
+                clickEvent.preventDefault();
+                const url = clickEvent.target.href;
+                const iframe = document.querySelector('#typo3-contentIframe');
+                iframe.src = url;
+            });
+       });
+    });
+</script>
+
+<div class="dropdown-table" style="padding-bottom: 10px; border-bottom: 1px solid dimgrey; margin-bottom: 10px">
     <f:for each="{latestUnreadNotifications}" as="notification">
         <div class="dropdown-table-row">
             <div class="dropdown-table-column dropdown-table-icon">
@@ -18,15 +31,16 @@
             </div>
         </div>
     </f:for>
-    <div class="dropdown-table-row">
-        <hr style="border-color: white; width: 100%;">
-    </div>
+</div>
+<div class="dropdown-table">
     <div class="dropdown-table-row">
         <div class="dropdown-table-column dropdown-table-icon">
             <core:icon identifier="apps-clipboard-list" alternativeMarkupIdentifier="inline"/>
         </div>
         <div class="dropdown-table-column dropdown-table-title">
-            <a href="#">See all <f:if condition="{unreadNotificationsCount}">({unreadNotificationsCount} unread)</f:if></a>
+            <f:be.link route="user_notifications" class="t3-js-target-iframe" parameters="{action: 'notifications'}">
+                See all <f:if condition="{unreadNotificationsCount}">({unreadNotificationsCount} unread)</f:if>
+            </f:be.link>
         </div>
     </div>
     <div class="dropdown-table-row">
@@ -34,7 +48,9 @@
             <core:icon identifier="actions-cog-alt" alternativeMarkupIdentifier="inline"/>
         </div>
         <div class="dropdown-table-column dropdown-table-title">
-            <a class="t3js-open-doc" href="{notificationSettingsUrl}">Notifications settings</a>
+            <f:be.link route="user_notifications" class="t3-js-target-iframe" parameters="{action: 'subscriptions'}">
+                Notifications settings
+            </f:be.link>
         </div>
     </div>
 </div>

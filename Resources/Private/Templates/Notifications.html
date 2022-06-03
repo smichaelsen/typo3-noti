@@ -5,9 +5,40 @@
     data-namespace-typo3-fluid="true"
 >
 
+
+<f:variable name="markAsReadAjaxUri"></f:variable>
+<script type="application/javascript">
+    window.addEventListener('load', function() {
+        document.querySelectorAll('.t3-js-notificaton-mark-as-read[data-is-read="0"]').forEach(function(el) {
+            el.addEventListener('click', function(clickEvent) {
+                const summary = clickEvent.target;
+                if (summary.dataset.isRead === "1") {
+                    return;
+                }
+                summary.setAttribute('data-is-read', '1');
+                const xhttp = new XMLHttpRequest();
+                xhttp.open('GET', summary.dataset.markAsReadAjaxUri, true);
+                xhttp.send();
+            });
+        });
+    });
+</script>
+
+<style>
+    .tx-noti summary {
+        cursor: pointer;
+    }
+    .tx-noti summary[data-is-read="0"] {
+        font-weight: bold;
+    }
+    .tx-noti summary[data-is-read="1"] {
+        color: dimgrey;
+    }
+</style>
+
 <h2>Your notifications</h2>
 
-<div class="panel panel-default" style="max-width: 800px">
+<div class="tx-noti panel panel-default" style="max-width: 800px">
     <table class="table table-striped table-hover">
         <tbody>
             <f:for each="{notifications}" as="notification">
@@ -17,16 +48,13 @@
                     </td>
                     <td style="width: 600px; vertical-align: top;">
                         <details>
-                            <summary style="cursor: pointer">
+                            <summary
+                                data-mark-as-read-ajax-uri="{f:be.uri(route: 'ajax_user_notifications', parameters: {readNotificationUid: notification.uid})}"
+                                data-is-read="{notification.read}"
+                                class="t3-js-notificaton-mark-as-read"
+                            >
                                 <core:icon identifier="{notification.icon_identifier -> v:or(alternative: 'actions-dot')}" alternativeMarkupIdentifier="inline"/>
-                                <f:if condition="{notification.read}">
-                                    <f:then>
-                                       <span style="color: dimgrey">{notification.title}</span>
-                                    </f:then>
-                                    <f:else>
-                                        <strong>{notification.title}</strong>
-                                    </f:else>
-                                </f:if>
+                                {notification.title}
                             </summary>
                             {notification.message}
                         </details>

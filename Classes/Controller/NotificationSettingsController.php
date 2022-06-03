@@ -40,7 +40,6 @@ class NotificationSettingsController
         $action = $request->getQueryParams()['action'] ?? $request->getParsedBody()['action'] ?? 'subscriptions';
 
         $this->generateMenu($action);
-//        $this->generateButtons();
 
         if ($action === 'subscriptions') {
             $content = $this->subscriptionsAction($request);
