@@ -58,7 +58,7 @@
                                     <core:icon identifier="{notification.icon_identifier -> v:or(alternative: 'actions-dot')}" alternativeMarkupIdentifier="inline"/>
                                     {notification.title}
                                 </summary>
-                                {notification.message}
+                                {notification.message -> f:format.html()}
                             </details>
                         </td>
                     </tr>

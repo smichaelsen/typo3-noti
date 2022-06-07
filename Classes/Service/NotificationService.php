@@ -22,7 +22,7 @@ class NotificationService implements SingletonInterface
 
     public function __invoke(EventInterface $event): EventInterface
     {
-        $eventKey = get_class($event) . '\\' . $event->getVariant() ?? '_default';
+        $eventKey = get_class($event) . '\\' . ($event->getVariant() ?? '_default');
         $subscriptions = $this->loadSubscriptionsForEventKey($eventKey);
         foreach ($subscriptions as $subscription) {
             if (!in_array($subscription['notifier_key'], $this->notifierRegistry->getAvailableNotifierKeys())) {
