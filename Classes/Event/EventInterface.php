@@ -7,10 +7,16 @@ interface EventInterface
     public function getTitle(): string;
 
     /**
-     * Details about the notification. Can include HTML.
+     * Details about the notification.
      * @return string
      */
     public function getMessage(): string;
+
+    /**
+     * Indicated whether the message should be treated as HTML or plain text
+     * @return bool
+     */
+    public function isMessageHtml(): bool;
 
     /**
      * Hint: The styleguide backend module shows all icons available in the system.

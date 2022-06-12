@@ -5,6 +5,7 @@ CREATE TABLE tx_noti_notification (
 	user int(11) NOT NULL default '0',
 	title tinytext,
 	message text,
+	is_message_html tinyint(4) DEFAULT '0' NOT NULL,
 	icon_identifier tinytext,
 	read tinyint(4) DEFAULT '0' NOT NULL,
 

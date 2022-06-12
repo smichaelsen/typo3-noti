@@ -30,7 +30,7 @@ class NotificationsController extends AbstractBackendController
 
         $view = $this->createView();
         $notifications = $this->connection->select(
-            ['uid', 'title', 'icon_identifier', 'crdate', 'message', 'read'],
+            ['uid', 'title', 'icon_identifier', 'crdate', 'message', 'is_message_html', 'read'],
             'tx_noti_notification',
             ['user' => $this->getBackendUser()->user['uid']],
             [],

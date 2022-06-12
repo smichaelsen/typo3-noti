@@ -29,6 +29,11 @@ class LogEntry implements EventInterface
         return $this->logRecord->getComponent() . ': ' . $this->logRecord->getMessage();
     }
 
+    public function isMessageHtml(): bool
+    {
+        return false;
+    }
+
     public function getIconIdentifier(): string
     {
         return 'status-dialog-error';

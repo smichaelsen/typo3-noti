@@ -22,7 +22,11 @@ class EmailNotifier implements NotifierInterface
         $mailMessage->setFrom($from);
         $mailMessage->setTo($recipient);
         $mailMessage->setSubject($subject);
-        $mailMessage->html($event->getMessage());
+        if ($event->isMessageHtml()) {
+            $mailMessage->html($event->getMessage());
+        } else {
+            $mailMessage->text($event->getMessage());
+        }
         $mailMessage->send();
     }
 
