@@ -27,7 +27,7 @@ class NotificationCenterNotifier extends AbstractNotifier
                 'user' => $userId,
                 'title' => $event->getTitle(),
                 'message' => $event->getMessage(),
-                'is_html_message' => (int)$event->isMessageHtml(),
+                'is_message_html' => (int)$event->isMessageHtml(),
                 'icon_identifier' => $event->getIconIdentifier(),
             ],
         );
