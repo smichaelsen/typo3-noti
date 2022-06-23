@@ -26,11 +26,11 @@ class DispatchLogNotification implements ProcessorInterface
 
     private function isNewEntry(LogRecord $logRecord): bool
     {
-        if (!isset($logRecord->getData()['exception'])) {
+        $logData = $logRecord->getData();
+        if (!isset($logData['exception']) || !$logData['exception'] instanceof \Exception) {
             return true;
         }
-        /** @var \Exception $exception */
-        $exception = $logRecord->getData()['exception'];
+        $exception = $logData['exception'];
         $key = 'exceptionCodeNotified_' . $exception->getCode();
         $registry = GeneralUtility::makeInstance(Registry::class);
         if ($registry->get(self::class, $key, false)) {
