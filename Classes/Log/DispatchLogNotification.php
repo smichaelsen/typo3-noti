@@ -29,9 +29,14 @@ class DispatchLogNotification implements ProcessorInterface
         if (!isset($logRecord->getData()['exception'])) {
             return true;
         }
-        /** @var \Exception $exception */
         $exception = $logRecord->getData()['exception'];
-        $key = 'exceptionCodeNotified_' . $exception->getCode();
+        if ($exception instanceof \Exception) {
+            $key = 'exceptionCodeNotified_' . $exception->getCode();
+        } elseif (is_string($exception)) {
+            $key = md5($exception);
+        } else {
+            return true;
+        }
         $registry = GeneralUtility::makeInstance(Registry::class);
         if ($registry->get(self::class, $key, false)) {
             return false;
