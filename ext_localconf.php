@@ -11,6 +11,11 @@ $GLOBALS['TYPO3_CONF_VARS']['LOG']['processorConfiguration'][\Psr\Log\LogLevel::
 
 $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1654079048] = \Smichaelsen\Noti\Backend\Toolbar\NotificationCenterToolbarItem::class;
 
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\TYPO3\CMS\Scheduler\Task\TableGarbageCollectionTask::class]['options']['tables']['tx_noti_notification'] = [
+    'dateField' => 'tstamp',
+    'expirePeriod' => 30,
+];
+
 $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 $iconRegistry->registerIcon(
     'ext-noti-bell',
