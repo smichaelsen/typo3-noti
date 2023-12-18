@@ -1,8 +1,6 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
+defined('TYPO3') or die();
 
 $GLOBALS['TYPO3_CONF_VARS']['LOG']['processorConfiguration'][\Psr\Log\LogLevel::EMERGENCY][\Smichaelsen\Noti\Log\DispatchLogNotification::class] = [];
 $GLOBALS['TYPO3_CONF_VARS']['LOG']['processorConfiguration'][\Psr\Log\LogLevel::ALERT][\Smichaelsen\Noti\Log\DispatchLogNotification::class] = [];
