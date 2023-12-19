@@ -68,7 +68,7 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
         )->fetchAllAssociative();
     }
 
-    public function getAdditionalAttributes()
+    public function getAdditionalAttributes(): array
     {
         return [];
     }
@@ -83,11 +83,9 @@ class NotificationCenterToolbarItem implements ToolbarItemInterface
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setLayoutRootPaths(['EXT:noti/Resources/Private/Layouts']);
         $view->setPartialRootPaths(['EXT:backend/Resources/Private/Partials/ToolbarItems', 'EXT:noti/Resources/Private/Partials']);
-        $view->setTemplateRootPaths(['EXT:noti/Resources/Private/Templates']);
 
-        $view->setTemplate($filename);
+        $view->setTemplatePathAndFilename('EXT:noti/Resources/Private/Templates/' . $filename);
 
-        $view->getRequest()->setControllerExtensionName('Noti');
         return $view;
     }
 
