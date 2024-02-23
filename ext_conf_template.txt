@@ -1,0 +1,3 @@
+# customcategory=configuration=Notifier Configuration
+# cat=configuration//1; type=string; label=Disable Email Notifications
+configuration.disableEmailNotifications = 0
