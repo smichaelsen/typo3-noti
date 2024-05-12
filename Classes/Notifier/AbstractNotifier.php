@@ -3,7 +3,6 @@
 namespace Smichaelsen\Noti\Notifier;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Lang\LanguageService;
 
@@ -17,7 +16,7 @@ abstract class AbstractNotifier implements NotifierInterface
      */
     protected function renderContentWithFluid($content, $variables)
     {
-        $view = GeneralUtility::makeInstance(ObjectManager::class)->get(StandaloneView::class);
+        $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setTemplateSource($content);
         $view->assignMultiple($variables);
         return $view->render();
