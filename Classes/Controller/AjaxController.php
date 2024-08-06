@@ -10,7 +10,7 @@ use TYPO3\CMS\Core\Http\NullResponse;
 
 class AjaxController extends AbstractBackendController
 {
-    public function handleRequest(ServerRequestInterface $request): ResponseInterface
+    public function processRequest(ServerRequestInterface $request): ResponseInterface
     {
         $notificationUid = (int)$request->getQueryParams()['readNotificationUid'];
         if ($notificationUid === 0) {

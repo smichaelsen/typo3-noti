@@ -7,43 +7,45 @@ namespace Smichaelsen\Noti\Controller;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ControllerInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3Fluid\Fluid\View\ViewInterface;
 
-abstract class AbstractBackendController
+abstract class AbstractBackendController implements ControllerInterface
 {
     protected Connection $connection;
-    protected ModuleTemplate $moduleTemplate;
+    protected ModuleTemplateFactory $moduleTemplateFactory;
     protected UriBuilder $uriBuilder;
+    protected ModuleTemplate $moduleTemplate;
 
-    /** @noinspection PhpUnused */
-    public function injectConnection(ConnectionPool $connectionPool)
-    {
+    public function __construct(
+        ConnectionPool $connectionPool,
+        UriBuilder $uriBuilder,
+        ModuleTemplateFactory $moduleTemplateFactory
+    ) {
         $this->connection = $connectionPool->getConnectionForTable('tx_noti_notification');
-    }
-
-    /** @noinspection PhpUnused */
-    public function injectUriBuilder(UriBuilder $uriBuilder)
-    {
         $this->uriBuilder = $uriBuilder;
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
     }
 
-    public function __construct()
+
+    protected function initialize(ServerRequestInterface $request): void
     {
-        $this->moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($request);
     }
 
-    protected function createView(): ViewInterface
+    protected function createView(ServerRequestInterface $request): ViewInterface
     {
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setTemplateRootPaths(['EXT:noti/Resources/Private/Templates']);
         $view->setPartialRootPaths(['EXT:noti/Resources/Private/Partials']);
-        $view->setLayoutRootPaths(['EXT:noti/Resources/Private/Layouts']);
-        $view->getRequest()->setControllerExtensionName('Noti');
+        $view->setLayoutRootPaths(['EXT:noti/Resources/Private/Layouts/']);
+        $view->setRequest($request);
         return $view;
     }
 
