@@ -32,11 +32,14 @@ class NotificationSettingsController extends AbstractBackendController
         $this->notifierRegistry = $notifierRegistry;
     }
 
-    public function handleRequest(ServerRequestInterface $request): ResponseInterface
+    public function processRequest(ServerRequestInterface $request): ResponseInterface
     {
+        $this->initialize($request);
+        $this->moduleTemplate->setTitle('Notification Settings');
         $this->generateMenu($request);
         $content = $this->subscriptionsAction($request);
-        $this->moduleTemplate->setContent($content);
+        $this->moduleTemplate->getView()->assign('content', $content);
+
         return new HtmlResponse($this->moduleTemplate->renderContent());
     }
 
@@ -60,7 +63,8 @@ class NotificationSettingsController extends AbstractBackendController
         }
 
         $formAction = (string)GeneralUtility::makeInstance(UriBuilder::class)->buildUriFromRoutePath($request->getAttribute('route')->getPath());
-        $view = $this->createView();
+
+        $view = $this->createView($request);
         $view->assign('events', $this->eventRegistry->getEvents());
         $view->assign('existingSubscriptions', $this->loadExistingSubscriptions($selectedUser));
         $view->assign('notifiers', $this->notifierRegistry->getNotifiers());
@@ -70,16 +74,6 @@ class NotificationSettingsController extends AbstractBackendController
             $this->addBackendUserSelector($selectedUser);
         }
         return $view->render('Subscriptions');
-    }
-
-    protected function createView(): ViewInterface
-    {
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setTemplateRootPaths(['EXT:noti/Resources/Private/Templates']);
-        $view->setPartialRootPaths(['EXT:noti/Resources/Private/Partials']);
-        $view->setLayoutRootPaths(['EXT:noti/Resources/Private/Layouts']);
-        $view->getRequest()->setControllerExtensionName('Noti');
-        return $view;
     }
 
     protected function savePostedData(array $postedData, int $selectedUser): void

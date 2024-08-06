@@ -5,6 +5,15 @@
 >
 
 <h2>Manage your subscriptions</h2>
+<script type="application/javascript">
+    window.addEventListener('load', function() {
+        document.querySelectorAll('.module[data-module-name="user_notification_settings"] select').forEach(function(el) {
+            el.addEventListener('change', function() {
+                window.location.href = this.value;
+            });
+        });
+    });
+</script>
 
 <form action="{formAction}" method="POST">
     <div class="panel panel-default" style="max-width: 800px">

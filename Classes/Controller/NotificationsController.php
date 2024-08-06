@@ -10,11 +10,14 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 
 class NotificationsController extends AbstractBackendController
 {
-    public function handleRequest(ServerRequestInterface $request): ResponseInterface
+    public function processRequest(ServerRequestInterface $request): ResponseInterface
     {
+        $this->initialize($request);
+        $this->moduleTemplate->setTitle('Notifications');
         $this->generateMenu($request);
         $content = $this->notificationsAction($request);
-        $this->moduleTemplate->setContent($content);
+        $this->moduleTemplate->getView()->assign('content', $content);
+
         return new HtmlResponse($this->moduleTemplate->renderContent());
     }
 
@@ -23,22 +26,22 @@ class NotificationsController extends AbstractBackendController
         if (isset($request->getQueryParams()['markAsRead'])) {
             $this->connection->update(
                 'tx_noti_notification',
-                ['read' => '1'],
-                ['user' => $this->getBackendUser()->user['uid']],
+                ['read' => 1],
+                ['user' => (int)$this->getBackendUser()->user['uid']]
             );
         }
 
-        $view = $this->createView();
+        $view = $this->createView($request);
         $notifications = $this->connection->select(
             ['uid', 'title', 'icon_identifier', 'crdate', 'message', 'is_message_html', 'read'],
             'tx_noti_notification',
-            ['user' => $this->getBackendUser()->user['uid']],
+            ['user' => (int)$this->getBackendUser()->user['uid']],
             [],
             ['crdate' => 'DESC'],
-            100,
+            100
         )->fetchAllAssociative();
         $view->assign('notifications', $notifications);
-        $view->assign('markAllReadLink', $this->uriBuilder->buildUriFromRoute('user_notifications', ['action' => 'notifications', 'markAsRead' => 'all']));
+        $view->assign('markAllReadLink', (string)$this->uriBuilder->buildUriFromRoute('user_notifications', ['markAsRead' => 'all']));
         return $view->render('Notifications');
     }
 }

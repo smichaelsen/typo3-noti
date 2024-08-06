@@ -20,41 +20,50 @@
     });
 </script>
 
-<div class="dropdown-table" style="padding-bottom: 10px; border-bottom: 1px solid dimgrey; margin-bottom: 10px">
+<ul class="dropdown-list" style="padding-bottom: 10px; border-bottom: 1px solid dimgrey; margin-bottom: 10px">
     <f:for each="{latestUnreadNotifications}" as="notification">
-        <div class="dropdown-table-row">
-            <div class="dropdown-table-column dropdown-table-icon">
-                <core:icon identifier="{notification.icon_identifier -> v:or(alternative: 'actions-dot')}" alternativeMarkupIdentifier="inline"/>
-            </div>
-            <div class="dropdown-table-column dropdown-table-title">
-                {notification.title}
-            </div>
-        </div>
+        <li>
+            <a class="dropdown-item">
+                <div class="dropdown-item-columns">
+                    <div class="dropdown-item-column dropdown-item-column-icon">
+                        <core:icon identifier="{notification.icon_identifier -> v:or(alternative: 'actions-dot')}" alternativeMarkupIdentifier="inline"/>
+                    </div>
+                    <div class="dropdown-item-column dropdown-item-column-title">
+                        {notification.title}
+                    </div>
+                </div>
+            </a>
+        </li>
     </f:for>
-</div>
-<div class="dropdown-table">
-    <div class="dropdown-table-row">
-        <div class="dropdown-table-column dropdown-table-icon">
-            <core:icon identifier="apps-clipboard-list" alternativeMarkupIdentifier="inline"/>
-        </div>
-        <div class="dropdown-table-column dropdown-table-title">
-            <f:be.link route="user_notifications" class="t3-js-target-iframe">
-                See all <f:if condition="{unreadNotificationsCount}">({unreadNotificationsCount} unread)</f:if>
-            </f:be.link>
-        </div>
-    </div>
+</ul>
+
+<ul class="dropdown-list">
+    <li>
+        <f:be.link route="user_notifications" class="dropdown-item">
+            <div class="dropdown-item-columns">
+                <div class="dropdown-item-column dropdown-item-column-icon">
+                    <core:icon identifier="apps-clipboard-list" alternativeMarkupIdentifier="inline"/>
+                </div>
+                <div class="dropdown-item-column dropdown-item-column-title">
+                        See all <f:if condition="{unreadNotificationsCount}">({unreadNotificationsCount} unread)</f:if>
+                </div>
+            </div>
+        </f:be.link>
+    </li>
     <f:if condition="{hasSettingsAccess}">
-        <div class="dropdown-table-row">
-            <div class="dropdown-table-column dropdown-table-icon">
-                <core:icon identifier="actions-cog-alt" alternativeMarkupIdentifier="inline"/>
-            </div>
-            <div class="dropdown-table-column dropdown-table-title">
-                <f:be.link route="user_notification_settings" class="t3-js-target-iframe">
-                    Notifications settings
-                </f:be.link>
-            </div>
-        </div>
+        <li>
+            <f:be.link route="user_notification_settings" class="dropdown-item">
+                <span class="dropdown-item-columns">
+                    <span class="dropdown-item-column dropdown-item-column-icon">
+                        <core:icon identifier="actions-cog-alt" alternativeMarkupIdentifier="inline"/>
+                    </span>
+                    <span class="dropdown-item-column dropdown-item-column-title">
+                        Notifications settings
+                    </span>
+                </span>
+            </f:be.link>
+        </li>
     </f:if>
-</div>
+</ul>
 
 </html>
