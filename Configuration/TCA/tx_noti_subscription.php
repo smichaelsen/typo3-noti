@@ -13,6 +13,7 @@ return [
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'iconfile' => 'EXT:noti/Resources/Public/Icons/tx_noti_subscription.svg',
+        'rootLevel' => 1,
     ],
     'types' => [
         '0' => ['showitem' => 'event_key, notifier_key, user'],
