@@ -8,9 +8,19 @@ class EventRegistry
 {
     private array $events;
 
-    public function addEvent(string $eventKey, string $eventLabel): void
+    /**
+     * @param class-string<\Smichaelsen\Noti\Event\EventInterface> $className
+     */
+    public function addEvent(string $className): void
     {
-        $this->events[$eventKey] = $eventLabel;
+        if (!is_subclass_of($className, \Smichaelsen\Noti\Event\EventInterface::class)) {
+            throw new \InvalidArgumentException('Class ' . $className . ' must implement \Smichaelsen\Noti\Event\EventInterface', 1722953200);
+        }
+
+        foreach ($className::getAllPossibleVariants() as $variantName => $eventLabel) {
+            $eventKey = $className . '\\' . $variantName;
+            $this->events[$eventKey] = $eventLabel;
+        }
     }
 
     public function getEvents(): array

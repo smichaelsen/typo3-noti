@@ -10,18 +10,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EventCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $eventRegistryDefinition = $container->findDefinition(EventRegistry::class);
-        if (!$eventRegistryDefinition) {
-            return;
-        }
         foreach ($container->findTaggedServiceIds('noti.event') as $serviceName => $tags) {
-            $variants = $serviceName::getAllPossibleVariants();
-            foreach ($variants as $variantName => $eventLabel) {
-                $eventKey = $serviceName . '\\' . $variantName;
-                $eventRegistryDefinition->addMethodCall('addEvent', [$eventKey, $eventLabel]);
-            }
+            $eventRegistryDefinition->addMethodCall('addEvent', [$serviceName]);
         }
     }
 }

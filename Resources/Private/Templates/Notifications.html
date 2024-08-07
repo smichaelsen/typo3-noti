@@ -67,7 +67,7 @@
                                         </summary>
                                         <f:if condition="{notification.is_message_html}">
                                             <f:then>
-                                                {notification.message -> f:format.html()}
+                                                {notification.message -> f:format.raw()}
                                             </f:then>
                                             <f:else>
                                                 <pre>{notification.message}</pre>

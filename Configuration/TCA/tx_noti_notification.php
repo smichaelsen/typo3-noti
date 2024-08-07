@@ -11,6 +11,7 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'iconfile' => 'EXT:noti/Resources/Public/Icons/bell.svg',
+        'rootLevel' => 1,
     ],
     'types' => [
         '0' => ['showitem' => 'user, read, title, message'],
