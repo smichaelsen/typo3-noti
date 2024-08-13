@@ -87,7 +87,6 @@ class NotificationSettingsController extends AbstractBackendController
                 $this->connection->insert(
                     'tx_noti_subscription',
                     [
-                        'cruser_id' => $GLOBALS['BE_USER']->user['uid'],
                         'event_key' => $eventKey,
                         'notifier_key' => $notifierKey,
                         'user' => $selectedUser,
