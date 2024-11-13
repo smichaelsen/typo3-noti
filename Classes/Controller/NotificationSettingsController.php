@@ -57,7 +57,10 @@ class NotificationSettingsController extends AbstractBackendController
                 $selectedUser = $bodySelectedUser;
             }
         }
-        $postedData = GeneralUtility::_POST('tx_noti');
+        $postedData = $parsedBody['tx_noti'] ?? [];
+        if (!empty($postedData)) {
+            $this->savePostedData($postedData, $selectedUser);
+        }
         if (is_array($postedData)) {
             $this->savePostedData($postedData, $selectedUser);
         }
