@@ -46,9 +46,9 @@ class NotificationSettingsController extends AbstractBackendController
     private function subscriptionsAction(ServerRequestInterface $request): string
     {
         $selectedUser = $this->getBackendUser()->user['uid'];
+        $parsedBody = $request->getParsedBody();
         if ($this->getBackendUser()->isAdmin()) {
             $queryParams = $request->getQueryParams();
-            $parsedBody = $request->getParsedBody();
             $querySelectedUser = isset($queryParams['selectedUser']) ? (int)$queryParams['selectedUser'] : null;
             $bodySelectedUser = isset($parsedBody['selectedUser']) ? (int)$parsedBody['selectedUser'] : null;
             if ($querySelectedUser !== null) {
@@ -57,8 +57,8 @@ class NotificationSettingsController extends AbstractBackendController
                 $selectedUser = $bodySelectedUser;
             }
         }
-        $postedData = GeneralUtility::_POST('tx_noti');
-        if (is_array($postedData)) {
+        $postedData = $parsedBody['tx_noti'] ?? [];
+        if (!empty($postedData)) {
             $this->savePostedData($postedData, $selectedUser);
         }
 
