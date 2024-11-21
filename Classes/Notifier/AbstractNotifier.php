@@ -9,7 +9,6 @@ use TYPO3\CMS\Lang\LanguageService;
 
 abstract class AbstractNotifier implements NotifierInterface
 {
-
     /**
      * @param string $content
      * @param array $variables

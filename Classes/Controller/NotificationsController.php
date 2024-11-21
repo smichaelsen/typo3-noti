@@ -24,7 +24,7 @@ class NotificationsController extends AbstractBackendController
     private function notificationsAction(ServerRequestInterface $request): string
     {
         if (isset($request->getQueryParams()['markAsRead'])) {
-            $this->connection->update(
+            $this->getConnection()->update(
                 'tx_noti_notification',
                 ['read' => 1],
                 ['user' => (int)$this->getBackendUser()->user['uid']]
@@ -32,7 +32,7 @@ class NotificationsController extends AbstractBackendController
         }
 
         $view = $this->createView($request);
-        $notifications = $this->connection->select(
+        $notifications = $this->getConnection()->select(
             ['uid', 'title', 'icon_identifier', 'crdate', 'message', 'is_message_html', 'read'],
             'tx_noti_notification',
             ['user' => (int)$this->getBackendUser()->user['uid']],

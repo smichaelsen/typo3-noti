@@ -18,21 +18,13 @@ use TYPO3Fluid\Fluid\View\ViewInterface;
 
 abstract class AbstractBackendController implements ControllerInterface
 {
-    protected Connection $connection;
-    protected ModuleTemplateFactory $moduleTemplateFactory;
-    protected UriBuilder $uriBuilder;
     protected ModuleTemplate $moduleTemplate;
 
     public function __construct(
-        ConnectionPool $connectionPool,
-        UriBuilder $uriBuilder,
-        ModuleTemplateFactory $moduleTemplateFactory
-    ) {
-        $this->connection = $connectionPool->getConnectionForTable('tx_noti_notification');
-        $this->uriBuilder = $uriBuilder;
-        $this->moduleTemplateFactory = $moduleTemplateFactory;
-    }
-
+        private readonly ConnectionPool $connectionPool,
+        protected readonly UriBuilder $uriBuilder,
+        private readonly ModuleTemplateFactory $moduleTemplateFactory,
+    ) {}
 
     protected function initialize(ServerRequestInterface $request): void
     {
@@ -83,5 +75,10 @@ abstract class AbstractBackendController implements ControllerInterface
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
+    }
+
+    protected function getConnection(): Connection
+    {
+        return $this->connectionPool->getConnectionForTable('tx_noti_notification');
     }
 }
