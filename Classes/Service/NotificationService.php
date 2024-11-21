@@ -20,9 +20,8 @@ class NotificationService implements SingletonInterface
     public function __construct(
         ConnectionPool $connectionPool,
         ExtensionConfiguration $extensionConfiguration,
-        NotifierRegistry $notifierRegistry
-    )
-    {
+        NotifierRegistry $notifierRegistry,
+    ) {
         $this->connection = $connectionPool->getConnectionForTable('tx_noti_subscription');
         $this->extensionConfiguration = $extensionConfiguration;
         $this->notifierRegistry = $notifierRegistry;

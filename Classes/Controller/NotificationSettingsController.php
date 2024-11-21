@@ -12,8 +12,6 @@ use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
-use TYPO3Fluid\Fluid\View\ViewInterface;
 
 class NotificationSettingsController extends AbstractBackendController
 {
@@ -127,7 +125,7 @@ class NotificationSettingsController extends AbstractBackendController
         )->fetchAllAssociative();
         usort(
             $backendUserRecords,
-            fn (array $userA, array $userB) => ($userA['realName'] ?: $userA['username']) <=> ($userB['realName'] ?: $userB['username'])
+            fn(array $userA, array $userB) => ($userA['realName'] ?: $userA['username']) <=> ($userB['realName'] ?: $userB['username'])
         );
         return $backendUserRecords;
     }
