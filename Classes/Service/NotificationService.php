@@ -13,19 +13,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class NotificationService implements SingletonInterface
 {
-    private Connection $connection;
-    private ExtensionConfiguration $extensionConfiguration;
-    private NotifierRegistry $notifierRegistry;
-
     public function __construct(
-        ConnectionPool $connectionPool,
-        ExtensionConfiguration $extensionConfiguration,
-        NotifierRegistry $notifierRegistry,
-    ) {
-        $this->connection = $connectionPool->getConnectionForTable('tx_noti_subscription');
-        $this->extensionConfiguration = $extensionConfiguration;
-        $this->notifierRegistry = $notifierRegistry;
-    }
+        private readonly ConnectionPool $connectionPool,
+        private readonly ExtensionConfiguration $extensionConfiguration,
+        private readonly NotifierRegistry $notifierRegistry,
+    ) {}
 
     public function __invoke(EventInterface $event): EventInterface
     {
@@ -50,7 +42,7 @@ class NotificationService implements SingletonInterface
 
     private function loadSubscriptionsForEventKey(string $eventKey): array
     {
-        return $this->connection->select(
+        return $this->connectionPool->getConnectionForTable('tx_noti_subscription')->select(
             ['uid', 'user', 'notifier_key'],
             'tx_noti_subscription',
             ['event_key' => $eventKey]
