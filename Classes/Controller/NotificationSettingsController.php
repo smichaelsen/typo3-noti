@@ -18,14 +18,12 @@ class NotificationSettingsController extends AbstractBackendController
     private EventRegistry $eventRegistry;
     private NotifierRegistry $notifierRegistry;
 
-    /** @noinspection PhpUnused */
-    public function injectEventRegistry(EventRegistry $eventRegistry)
+    public function injectEventRegistry(EventRegistry $eventRegistry): void
     {
         $this->eventRegistry = $eventRegistry;
     }
 
-    /** @noinspection PhpUnused */
-    public function injectNotifierRegistry(NotifierRegistry $notifierRegistry)
+    public function injectNotifierRegistry(NotifierRegistry $notifierRegistry): void
     {
         $this->notifierRegistry = $notifierRegistry;
     }
@@ -79,10 +77,10 @@ class NotificationSettingsController extends AbstractBackendController
         $existingSubscriptions = $this->loadExistingSubscriptions($selectedUser);
         foreach ($postedData as $subscriptionKey => $choice) {
             if ($choice !== 'on' && in_array($subscriptionKey, $existingSubscriptions)) {
-                $this->connection->delete('tx_noti_subscription', ['uid' => array_search($subscriptionKey, $existingSubscriptions)]);
+                $this->getConnection()->delete('tx_noti_subscription', ['uid' => array_search($subscriptionKey, $existingSubscriptions)]);
             } elseif ($choice === 'on' && !in_array($subscriptionKey, $existingSubscriptions)) {
                 [$eventKey, $notifierKey] = explode('|', $subscriptionKey);
-                $this->connection->insert(
+                $this->getConnection()->insert(
                     'tx_noti_subscription',
                     [
                         'event_key' => $eventKey,
@@ -98,7 +96,7 @@ class NotificationSettingsController extends AbstractBackendController
 
     protected function loadExistingSubscriptions(int $selectedUser): array
     {
-        $result = $this->connection->select(
+        $result = $this->getConnection()->select(
             ['uid', 'event_key', 'notifier_key'],
             'tx_noti_subscription',
             ['user' => $selectedUser]
@@ -118,7 +116,7 @@ class NotificationSettingsController extends AbstractBackendController
 
     protected function loadBackendUsers(): array
     {
-        $backendUserRecords = $this->connection->select(
+        $backendUserRecords = $this->getConnection()->select(
             ['uid', 'realName', 'username'],
             'be_users',
             ['deleted' => 0],
