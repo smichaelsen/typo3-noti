@@ -2,19 +2,12 @@
 
 defined('TYPO3') or die();
 
-use Psr\Log\LogLevel;
 use Smichaelsen\Noti\Backend\Toolbar\NotificationCenterToolbarItem;
-use Smichaelsen\Noti\Log\DispatchLogNotification;
 use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Scheduler\Task\TableGarbageCollectionTask;
-
-$GLOBALS['TYPO3_CONF_VARS']['LOG']['processorConfiguration'][LogLevel::EMERGENCY][DispatchLogNotification::class] = [];
-$GLOBALS['TYPO3_CONF_VARS']['LOG']['processorConfiguration'][LogLevel::ALERT][DispatchLogNotification::class] = [];
-$GLOBALS['TYPO3_CONF_VARS']['LOG']['processorConfiguration'][LogLevel::CRITICAL][DispatchLogNotification::class] = [];
-$GLOBALS['TYPO3_CONF_VARS']['LOG']['processorConfiguration'][LogLevel::ERROR][DispatchLogNotification::class] = [];
 
 $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1654079048] = NotificationCenterToolbarItem::class;
 
